@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Image</title>
+</head>
+<body>
+    <h1>Test Image</h1>
+    <!-- {%for i in encoded_imgs%}
+    <img id="picture" src="data:image/jpeg;base64,{{ i }}">
+    {%endfor%} -->
+    <div align="center">
+<button>
+    <img id="pic1" src="data:image/jpeg;base64,{{ encoded_imgs[0]  }}">
+</button>
+<button>
+    <img id="pic2" src="data:image/jpeg;base64,{{ encoded_imgs[1]  }}">
+</button>
+<br>
+<button>
+    <img id="pic3" src="data:image/jpeg;base64,{{ encoded_imgs[2]  }}">
+</button>
+<button>
+    <img id="pic4" src="data:image/jpeg;base64,{{ encoded_imgs[3]  }}">
+</button>
+    </div>
+</body>
+</html>
