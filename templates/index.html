@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Image</title>
+</head>
+<body>
+    <h1>Test Image</h1>
+    <button id="click" value="23">
+    <img id="picture" src="data:image/jpeg;base64,{{ img_data }}">
+    </button>
+    <input type="number" id="show" value="1">
+</body>
+</html>
+
+<script>
+    document.getElementById("click").addEventListener("click" , function(){
+        // document.getElementById("show").value++;
+        document.getElementById("show").value = document.getElementById("click").value;
+    })
+</script>
