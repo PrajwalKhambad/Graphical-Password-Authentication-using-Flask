@@ -1,0 +1,21 @@
+{
+    "manifest_version": 3,
+    "name": "Advanced Authentication",
+    "version": "1.0.0",
+    "description": "An extension that provides an extra layer of security using graphical password authentication",
+    "action": {
+        "default_popup" : "popup/popup.html"
+    },
+    "permissions": [
+      "tabs",
+      "activeTab"
+    ],
+    "content_scripts": [
+        {
+          "matches": ["https://brave.com/" , "https://www.facebook.com/"],
+          "js": ["content-script.js"],
+          "run_at": "document_end"
+        }
+      ]
+  }
+  
