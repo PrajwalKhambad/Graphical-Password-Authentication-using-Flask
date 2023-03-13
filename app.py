@@ -48,7 +48,7 @@ def hello_world():
 @app.route('/half')
 def my_fun():
     img=cv2.imread("static/test.jpg")
-    image=cv2.resize(img,(500,500))
+    image = cv2.resize(img, (500,500))
     (h,w)=image.shape[:2]
     (cX,cY)=(w//2,h//2)
 

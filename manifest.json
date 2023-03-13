@@ -4,7 +4,7 @@
     "version": "1.0.0",
     "description": "An extension that provides an extra layer of security using graphical password authentication",
     "action": {
-        "default_popup" : "popup/popup.html"
+        "default_popup" : "templates/popup.html"
     },
     "permissions": [
       "tabs",
