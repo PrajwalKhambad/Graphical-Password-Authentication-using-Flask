@@ -1,6 +1,6 @@
 import cv2
 import numpy as np
-img=cv2.imread("static/test.jpg")
+img=cv2.imread("static/images/test.jpg")
 image=cv2.resize(img,(300,300))
 
 # #For 2X2 Grid

@@ -8,7 +8,9 @@
 <body>
     <h1>Test Image</h1>
     <button id="click" value="23">
+        {%if img_data%}
     <img id="picture" src="data:image/jpeg;base64,{{ img_data }}">
+    {%endif%}
     </button>
     <input type="number" id="show" value="1">
 </body>
