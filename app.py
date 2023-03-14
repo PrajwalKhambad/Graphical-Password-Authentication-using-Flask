@@ -1,39 +1,20 @@
-from flask import Flask, render_template, request , jsonify , flash
+from flask import Flask, render_template, request , jsonify , flash, redirect, session, url_for
 from PIL import Image
 import base64
 import io
 import cv2
+import firebase_admin
+from firebase_admin import credentials, firestore, storage
+from werkzeug.utils import secure_filename
 
 
 app = Flask(__name__)
-'''
-@app.route('/image_upload' , methods=['GET' , 'POST'])
-def image_split(img):
-    if request.method=='POST':
-        img=request.files['file']
-    img=cv2.imread("static/test.jpg")
-    image=cv2.resize(img,(300,300))
-    h,w=image.shape[:2]
 
-    p1=w//3
-    p2=2*w//3
-
-    p3=h//3
-    p4=2*h//3
-
-    img1=image[0:p1,0:p3]
-    img2=image[p1:p2,0:p3]
-    img3=image[p2:w,0:p3]
-
-    img4=image[0:p1,p3:p4]
-    img5=image[p1:p2,p3:p4]
-    img6=image[p2:w,p3:p4]
-
-    img7=image[0:p1,p4:h]
-    img8=image[p1:p2,p4:h]
-    img9=image[p2:w,p4:h]
-'''
-
+# Initialize Firebase credentials
+cred = credentials.Certificate('D:\AI-B[Sem 4]\EDI_Sem4\smart-authentication-system-firebase-adminsdk-p9t06-606c99f335.json')
+firebase_admin.initialize_app(cred,{
+    'storageBucket' : 'smart-authentication-system.appspot.com'
+})
 
 @app.route('/')
 def hello_world():
@@ -75,10 +56,24 @@ def my_fun():
 
     return render_template("index2.html", encoded_imgs=encoded_imgs)
 
-@app.route('/upload' , methods=['GET',"POST"])
+@app.route("/upload", methods=["GET", "POST", "success"])
 def upload():
-    #TODO: Upload images to firebase storage
-    return render_template("image_upload.html")
+    if request.method == "POST":
+        # Get the uploaded file
+        file = request.files["file"]
+        # Get the user ID (you can use Flask's session to store the user ID)
+        user_id = session.get("user_id")
+        # Upload the file to Firebase Storage
+        bucket = storage.bucket()
+        blob = bucket.blob(f"{user_id}/{file.filename}")
+        blob.upload_from_file(file)
+        # Redirect to a success page
+        # return redirect(url_for("success"))
+        return render_template("image_upload.html",method='success')
+    else:
+        # Render the image upload page
+        return render_template("image_upload.html")
+
 
 def show_uploaded():
     if request.method=='POST':
@@ -89,6 +84,34 @@ def show_uploaded():
     encoded = base64.b64encode(io.BytesIO(data1).getvalue()).decode('utf-8')
     return render_template("image_upload.html", encoded = encoded)
 
-
 if __name__ == '__main__':
     app.run(debug=True)
+
+
+#'''
+# @app.route('/image_upload' , methods=['GET' , 'POST'])
+# def image_split(img):
+#     if request.method=='POST':
+#         img=request.files['file']
+#     img=cv2.imread("static/test.jpg")
+#     image=cv2.resize(img,(300,300))
+#     h,w=image.shape[:2]
+
+#     p1=w//3
+#     p2=2*w//3
+
+#     p3=h//3
+#     p4=2*h//3
+
+#     img1=image[0:p1,0:p3]
+#     img2=image[p1:p2,0:p3]
+#     img3=image[p2:w,0:p3]
+
+#     img4=image[0:p1,p3:p4]
+#     img5=image[p1:p2,p3:p4]
+#     img6=image[p2:w,p3:p4]
+
+#     img7=image[0:p1,p4:h]
+#     img8=image[p1:p2,p4:h]
+#     img9=image[p2:w,p4:h]
+# '''
