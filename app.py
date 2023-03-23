@@ -1,54 +1,91 @@
-from flask import Flask, render_template, request , jsonify , flash
-from PIL import Image
-import base64
+from datetime import timedelta, datetime
 import io
+from flask import Flask, render_template, request
+import base64
+from io import BytesIO
+import requests
 import cv2
-
+import firebase_admin
+from firebase_admin import credentials, auth, storage
+from PIL import Image
+import numpy as np
 
 app = Flask(__name__)
-'''
-@app.route('/image_upload' , methods=['GET' , 'POST'])
-def image_split(img):
-    if request.method=='POST':
-        img=request.files['file']
-    img=cv2.imread("static/test.jpg")
-    image=cv2.resize(img,(300,300))
-    h,w=image.shape[:2]
 
-    p1=w//3
-    p2=2*w//3
-
-    p3=h//3
-    p4=2*h//3
-
-    img1=image[0:p1,0:p3]
-    img2=image[p1:p2,0:p3]
-    img3=image[p2:w,0:p3]
-
-    img4=image[0:p1,p3:p4]
-    img5=image[p1:p2,p3:p4]
-    img6=image[p2:w,p3:p4]
-
-    img7=image[0:p1,p4:h]
-    img8=image[p1:p2,p4:h]
-    img9=image[p2:w,p4:h]
-'''
-
+# Initialize Firebase credentials
+cred = credentials.Certificate('D:/AI-B[Sem 4]/EDI_Sem4/advanced-authentication-3ba33-firebase-adminsdk-basti-91ee0a3617.json')
+firebase_admin.initialize_app(cred,{
+    'storageBucket' : 'advanced-authentication-3ba33.appspot.com'
+})
 
 @app.route('/')
-def hello_world():
-    # Full Script.
-    img = Image.open('static/images/test.jpg')
-    data = io.BytesIO()
-    img.save(data, "JPEG")
-    encoded_img_data = base64.b64encode(data.getvalue())
+def home():
+    if(request.method=="POST_"):
+        return render_template('display.html')
+    return render_template('image_upload.html')
 
-    return render_template("index.html", img_data=encoded_img_data.decode('utf-8'))
+@app.route("/", methods=["GET", "POST"])
+def upload():
+    if request.method == "POST":
+        # Get form data
+        email = request.form['email']
+        password = request.form['password']
+        image = request.files['image']
+
+        # Create new user in Firebase Authentication
+        user = auth.create_user(email=email, password=password)
+
+        # Upload image to Firebase Storage
+        bucket = storage.bucket()
+        blob = bucket.blob(f'{user.uid}.jpg')
+        blob.upload_from_string(image.read(), content_type='image/jpeg')
+        image_url = blob.generate_signed_url(expiration=300)
+
+        # Render the image_upload.html template with success message
+        return render_template('image_upload.html', message=f'Successfully signed up! Image URL: {image_url}')
+
+    # If request method is GET, render the image_upload.html template
+    return render_template('image_upload.html')
+
+
+@app.route('/display', methods=['GET', 'POST'])
+def image():
+    if request.method == 'POST':
+        # Get email input from form
+        global email
+        email = request.form.get('email')
+
+        # Get user info from Firebase Authentication
+        global user
+        try:
+            user = auth.get_user_by_email(email)
+        except:
+            return "User not found", 404
+
+        # Get image URL from Firebase Storage
+        bucket = storage.bucket()
+        blob = bucket.blob(f'{user.uid}.jpg')
+        expiration_time = timedelta(minutes=5)
+        image_url = blob.generate_signed_url(expiration=datetime.utcnow() + expiration_time,
+            method='GET')
+        print(image_url)
+
+        # Render HTML with image URL and email
+        return render_template('display.html', image_url=image_url, email=email)
+
+    # If request method is GET, show form to input email
+    return render_template('display.html')
 
 @app.route('/half')
 def my_fun():
-    img=cv2.imread("static/images/test.jpg")
-    # TODO: use firebase images in above function
+    bucket = storage.bucket()
+    blob = bucket.blob(f'{user.uid}.jpg')
+    expiration_time = timedelta(minutes=5)
+    image_url = blob.generate_signed_url(expiration=datetime.utcnow() + expiration_time)
+    response =requests.get(image_url)
+    img = Image.open(BytesIO(response.content))
+    img = np.array(img)
+    # img=cv2.imread("static/images/test.jpg")
     image = cv2.resize(img, (500,500))
     (h,w)=image.shape[:2]
     (cX,cY)=(w//2,h//2)
@@ -75,20 +112,32 @@ def my_fun():
 
     return render_template("index2.html", encoded_imgs=encoded_imgs)
 
-@app.route('/upload' , methods=['GET',"POST"])
-def upload():
-    #TODO: Upload images to firebase storage
-    return render_template("image_upload.html")
+# @app.route('/half')
+# def my_fun():
+#     bucket = storage.bucket()
+#     blob = bucket.blob(f'{user.uid}.jpg')
+#     expiration_time = timedelta(minutes=5)
+#     image_url = blob.generate_signed_url(expiration=datetime.utcnow() + expiration_time)
+#     response =requests.get(image_url)
+#     img = Image.open(BytesIO(response.content))
+#     img = np.array(img)
+#     image = cv2.resize(img, (500,500))
 
-def show_uploaded():
-    if request.method=='POST':
-        img=request.files['file']
-    image=cv2.resize(img,(300,300))
+#     # Divide the image into four equal parts
+#     (h,w)=image.shape[:2]
+#     (h_step, w_step)=(h//2, w//2)
+#     parts=[image[:h_step, :w_step], 
+#            image[:h_step, w_step:], 
+#            image[h_step:, :w_step], 
+#            image[h_step:, w_step:]]
 
-    _, data1=cv2.imencode(".jpg",image)
-    encoded = base64.b64encode(io.BytesIO(data1).getvalue()).decode('utf-8')
-    return render_template("image_upload.html", encoded = encoded)
+#     encoded_imgs=[]
+#     for part in parts:
+#         _, data = cv2.imencode(".jpg", part)
+#         encoded_part = base64.b64encode(data).decode('utf-8')
+#         encoded_imgs.append(encoded_part)
 
+#     return render_template("index2.html", encoded_imgs=encoded_imgs)
 
 if __name__ == '__main__':
     app.run(debug=True)
