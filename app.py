@@ -13,7 +13,7 @@ import numpy as np
 app = Flask(__name__)
 
 # Initialize Firebase credentials
-cred = credentials.Certificate('D:/AI-B[Sem 4]/EDI_Sem4/advanced-authentication-3ba33-firebase-adminsdk-basti-91ee0a3617.json')
+cred = credentials.Certificate('C:/Users/Anish/OneDrive/Desktop/EDI/advanced-authentication-3ba33-firebase-adminsdk-basti-91ee0a3617.json')
 firebase_admin.initialize_app(cred,{
     'storageBucket' : 'advanced-authentication-3ba33.appspot.com'
 })
