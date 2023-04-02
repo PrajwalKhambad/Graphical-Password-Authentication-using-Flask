@@ -1,0 +1,271 @@
+/* Style for body */
+
+
+
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700;800&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body,
+input {
+  font-family: "Poppins", sans-serif;
+}
+
+body{
+  margin: 0;
+  padding: 0;
+  background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+  background-size: 400% 400%;
+  animation: gradient-anim 15s ease infinite;
+  height: 100vh;
+  overflow: hidden;
+}
+
+@keyframes gradient-anim {
+	0% {
+		background-position: 0% 50%;
+	}
+	50% {
+		background-position: 100% 50%;
+	}
+	100% {
+		background-position: 0% 50%;
+	}
+}
+
+
+
+/* @import url('https://fonts.googleapis.com/css2?family=Noto+Sans:wght@700&family=Poppins:wght@400;500;600&display=swap');
+
+body { */
+    /* background-image: url("..../images/undraw_thought_process_re_om58.svg"); */
+    /* font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0; */
+    /* background-color: #f2f2f2; */
+
+
+  /* position: relative;
+  background-size: 400% 400%;
+  height: 100vh; */
+  /* overflow: hidden; */
+  /* background-color: #0081C9fd; */
+  /* background-color: #009EFF; */
+  /* background-color: #2FA4FF; */
+  /* background-color: #85F4FF; */
+  /* background-color: #FAF3F3; */
+  /* background-color: #00E7FF; */
+    /* background-color: #62CDFF; */
+
+    /* background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+    animation: gradient-anim 15s ease infinite;
+    overflow: hidden;
+}
+   */
+
+
+
+.center{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 750px;
+    height: 600px;
+    margin-bottom: 300px;
+    background-color: white;
+    border-radius: 20px;
+    box-shadow: 10px 10px 15px rgba(0,0,0,0.05);
+}
+
+.abc{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 550px;
+    height: 500px;
+    margin-bottom: 300px;
+    background-color: white;
+    /* background: white; */
+    border-radius: 20px;
+    box-shadow: 10px 10px 15px rgba(0,0,0,0.05);
+    text-align: center;
+
+}
+
+h1{
+  text-align: center;
+  padding: 20px 0 15px 0;
+}
+
+h2{
+    text-align: center;
+    padding: 2px 0 15px 0;
+}
+
+h3{
+    margin-left: 120px;
+}
+
+.email{
+    margin-left: 40px;
+    text-align: center;
+}
+
+hr{
+    border-width: 1.2px;
+}
+
+label{
+    font-weight: 600px;
+    padding: 5px;
+    margin: 20px;
+    font-size: 18px;
+}
+
+.txt_field{
+    height: 30px;
+    border-radius: 55px;
+    display: grid;
+    grid-template-columns: 15% 85%;
+    padding: 0 0.4rem;
+    position: relative;
+    margin-top: 40px;
+}
+
+
+
+/* Style for email form */
+form {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: 20px;
+    margin-right: 100px;
+    margin-bottom: 100px;
+    margin-left: 100px;
+    /* margin-top: 300px; */
+
+    /* background-color: white; */
+
+    /* background-image: url('C:/Users/Lenovo/Pictures/Video Projects/8314929977_36b1d58cf6_o_d.jpg');
+    background-size: cover; /* scales the image to cover the entire form */
+    /* background-repeat: no-repeat; */ 
+}
+  
+label {
+    margin-top: 10px;
+    margin-bottom: 5px;
+}
+  
+input[type=email] {
+    /*padding: 10px;
+    border-radius: 5px;
+    border: none;
+    margin-bottom: 10px;
+    box-shadow: 0 0 5px rgba(0,0,0,0.1);
+    width: 300px;*/
+
+    outline: none;
+    background-color: #C9EEFF;
+    /* background-color: #00FFF6; */
+    /* background-color: #C3F8FF; */
+    /* background-color: #42C2FF; */
+    /* background-color: #97DEFF; */
+    /* background-color: #85CDFD; */
+    border: none;
+    width: 400px;
+    height: 60px;
+    padding: 0.7rem;
+    border-radius: 55px;
+    font-weight: 600;
+    font-size: large;
+    display: grid;
+
+}
+
+.input::placeholder {
+    color: #aaa;
+    font-weight: 500;
+}
+  
+  
+button[type=submit] {
+    /* background-color:  #5995fd; */
+    /* background-color: #0014FF; */
+    /* background-color: #1363DF; */
+    background-color: #0014FF;
+    color: white;
+    padding: 10px 20px;
+    margin-top: 45px;
+    height: 60px;
+    width: 250px;
+    font-weight: 600;
+    font-size: large;
+    border-radius: 100px;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 0 5px rgba(0,0,0,0.1);
+}
+  
+  /* Style for displayed image */
+img {
+    display: block;
+    margin: auto;
+    margin-top: 50px;
+}
+  
+/* Style for grid size selection */
+select {
+    padding: 10px;
+    border-radius: 5px;
+    border: none;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 0 5px rgba(0,0,0,0.1);
+}
+  
+/* Style for selected grid size text */
+#selectedOption {
+    margin-top: 10px;
+    padding: 10px;
+    border-radius: 5px;
+    border: none;
+    width: 300px;
+    box-shadow: 0 0 5px rgba(0,0,0,0.1);
+}
+
+.left{
+    margin-left: 100px;
+}
+
+.image-show{
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 80px;
+  padding: 0 0 15px 0;
+  /* width: 50%; */
+}
+
+.select{
+    margin: auto;
+    margin-bottom: 20px;
+    width: 350px;
+    height: 50px;
+    font-size: large;
+}
+
+#select{
+    /* outline: #0014FF; */
+    height: auto;
+    width: 120px;
+    border-radius: 100px;
+}
