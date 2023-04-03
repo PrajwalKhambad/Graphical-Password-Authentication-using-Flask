@@ -139,5 +139,32 @@ def my_fun():
 
 #     return render_template("index2.html", encoded_imgs=encoded_imgs)
 
+@app.route('/show_images', methods=['GET', 'POST'])
+def show_images():
+    if request.method == 'POST':
+        email = request.form['email']
+        
+        # Retrieve images from Firebase storage
+        bucket = storage.bucket()
+        blobs = bucket.list_blobs()
+        images = []
+        expiration_time = timedelta(minutes=5)
+        for blob in blobs:
+            # if blob.content_type.startswith(''):
+            # images.append(blob.public_url)
+            images.append(blob.generate_signed_url(expiration=datetime.utcnow() + expiration_time))
+        
+        # Get the user's specific image by ID
+        # user_id = get_user_id_by_email(email) # replace with your own function to get user id
+        # specific_image = f'images/{user_id}.jpg'
+        # specific_image_url = storage.blob(specific_image).public_url
+        specific_image_url = "https://firebasestorage.googleapis.com/v0/b/advanced-authentication-3ba33.appspot.com/o/GrAybg5GMVZ6hDxT3FuEMei894K2.jpg?alt=media&token=ce960afd-5726-453e-93f7-f091873dfbd1"
+        
+        return render_template('login.html', images=images, specific_image_url=specific_image_url)
+    
+    return render_template('login.html')
+
+
+
 if __name__ == '__main__':
     app.run(debug=True)
