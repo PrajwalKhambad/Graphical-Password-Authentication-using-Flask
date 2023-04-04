@@ -1,0 +1,34 @@
+<!-- This page is for dividing image which taken from user while logged in -->
+
+<!doctype html>
+<html>
+  <head>
+    <title>Divide image into 3x3</title>
+    <style>
+      .row {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+      }
+      .cell {
+        margin: 5px;
+        border: 1px solid black;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Divide image into 3x3</h1>
+    <div class="container">
+      {% for row in cells %}
+        <div class="row">
+          {% for cell in row %}
+            <div class="cell">
+              <img src="{{ cell }}">
+            </div>
+          {% endfor %}
+        </div>
+      {% endfor %}
+    </div>
+  </body>
+</html>

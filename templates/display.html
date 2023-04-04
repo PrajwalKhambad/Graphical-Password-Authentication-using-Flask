@@ -3,6 +3,7 @@
 
 <head>
   <meta charset="utf-8">
+  <meta name = "viewport" content="width=device-width, initial-scale=1.0">
   <title>Display Image</title>
 </head>
 
@@ -21,6 +22,27 @@
   <br>
   <label for="selectedOption"></label>
   <input type="text" id="selectedOption" name="selectedOption" readonly>
+
+    {% if selectedOption == 2*2 %}
+      <div align="center">
+        <button>
+            <img id="pic1" src="data:image/jpeg;base64,{{ encoded_imgs[0]  }}">
+        </button>
+        <button>
+            <img id="pic2" src="data:image/jpeg;base64,{{ encoded_imgs[1]  }}">
+        </button>
+        <br>
+        <button>
+            <img id="pic3" src="data:image/jpeg;base64,{{ encoded_imgs[2]  }}">
+        </button>
+        <button>
+            <img id="pic4" src="data:image/jpeg;base64,{{ encoded_imgs[3]  }}">
+        </button>
+      </div>
+      {% endif %}
+      
+      
+      
   {% else %}
   <form method="POST">
     <label for="email">Enter Email:</label>

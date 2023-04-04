@@ -1,0 +1,35 @@
+<!-- This page is for dividing image which taken from user separatly testing -->
+<!doctype html>
+<html>
+  <head>
+    <title>Divide image into 3x3</title>
+    <style>
+      .row {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Divide image into 3x3</h1>
+    <div class="container">
+      {% for row in cells %}
+        <div class="row">
+          {% for cell in row %}
+            <div class="cell">
+              <button>
+                <img src="{{ cell }}">
+              </button>              
+            </div>
+          {% endfor %}
+        </div>
+      {% endfor %}
+    </div>
+    <form method="post" enctype="multipart/form-data">
+      <input type="file" name="file">
+      <input type="submit" value="Divide">
+    </form>
+  </body>
+</html>

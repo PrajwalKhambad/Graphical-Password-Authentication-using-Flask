@@ -1,0 +1,1 @@
+image.shape[:2]
