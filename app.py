@@ -15,7 +15,7 @@ import base64
 app = Flask(__name__)
 
 # Initialize Firebase credentials
-cred = credentials.Certificate('E:/EDI/Authentication_System/advanced-authentication-3ba33-firebase-adminsdk-basti-9d3f0d130d.json')
+cred = credentials.Certificate('D:/second_year/4th SEM/edi_mark_1/Authentication_System/advanced-authentication-3ba33-firebase-adminsdk-basti-91ee0a3617(1).json')
 firebase_admin.initialize_app(cred,{
     'storageBucket' : 'advanced-authentication-3ba33.appspot.com'
 })
