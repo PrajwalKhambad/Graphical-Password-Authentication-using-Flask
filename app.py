@@ -1,6 +1,6 @@
 from datetime import timedelta, datetime
 import io
-from flask import Flask, redirect, render_template, request, session, url_for
+from flask import Flask, render_template, request
 import base64
 from io import BytesIO
 import requests
@@ -14,7 +14,7 @@ import random
 app = Flask(__name__)
 
 # Initialize Firebase credentials
-cred = credentials.Certificate('D:/second_year/4th SEM/edi_mark_1/Authentication_System/advanced-authentication-3ba33-firebase-adminsdk-basti-91ee0a3617(1).json')
+cred = credentials.Certificate('D:/AI-B[Sem 4]/EDI_Sem4/advanced-authentication-3ba33-firebase-adminsdk-basti-91ee0a3617.json')
 firebase_admin.initialize_app(cred,{
     'storageBucket' : 'advanced-authentication-3ba33.appspot.com'
 })
@@ -141,6 +141,7 @@ def login_page():
         images = random.sample(all_images, 5)
         for ele in range(5):
             some_images.append(images[ele])
+        # set(some_images)
         random.shuffle(some_images)
 
         return render_template('login.html', images=some_images)
