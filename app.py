@@ -124,6 +124,7 @@ def login_page():
         blobs = bucket.list_blobs()
         expiration_time = timedelta(minutes=5)
         all_images = []     # this list contains all the images from the database
+        global some_images
         some_images = []    # this list will contain only the 6 images from the database
         for blob in blobs:
             all_images.append(blob.generate_signed_url(expiration=datetime.utcnow() + expiration_time))
@@ -154,9 +155,27 @@ def login_page():
         # set(some_images)
         random.shuffle(some_images)
 
-        return render_template('login.html', images=some_images)
+        attempts_remaining = 3
+
+        return render_template('login.html', images=some_images, attempts_remaining=attempts_remaining)
     
     return render_template('login.html')
+
+@app.route('/verify', methods=['POST'])
+def verify_page():
+    specific_image = specific_image_url
+    selected_image = request.form['selected_image']
+    attempts_remaining = int(request.form['attempts_remaining'])
+    if specific_image == selected_image:
+        # TODO: return the file after a successful image selection
+        return "Verification successful!"
+    else:
+        attempts_remaining -= 1
+        if attempts_remaining > 0:
+            error_message = f"Wrong image selected!\nSelect the correct image\nOnly {attempts_remaining} attempts left"
+            return render_template('login.html', error_message=error_message, images=some_images, attempts_remaining=attempts_remaining)
+        else:
+            return "Verification failed! Maximum number of attempts reached."
 
 if __name__ == '__main__':
     app.run(debug=True)

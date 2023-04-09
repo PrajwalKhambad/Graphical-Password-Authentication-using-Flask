@@ -1,26 +1,42 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Login</title>
-  </head>
-  <body>
-    <h1>Login</h1>
-    <form method="POST" action="/login">
-      <label>Email:</label>
-      <input type="email" name="email">
-      <br><br>
-      <input type="submit" value="Submit">
-    </form>
-    <br>
-    <h2>Images:</h2>
+
+<head>
+  <title>Login</title>
+</head>
+
+<body>
+  <h1>Login</h1>
+  <form method="POST" action="/login">
+    <label>Email:</label>
+    <input type="email" name="email">
+    <br><br>
+    <input type="submit" value="Submit">
+  </form>
+  <h2>Images:</h2>
+  <p>Select the image that you added during sign up</p>
+  {% if attempts_remaining %}
+  <p>{{ attempts_remaining }} attempts remaining</p>
+  {% endif %}
+  <form method="POST" action="/verify">
     {% if images %}
-      {% for image in images %}
-        <button>
-            <img src="{{ image }}" width="300" height="200">
-        </button>
-      {% endfor %}
+    {% for i in range(6) %}
+    <button name="selected_image" value="{{ images[i] }}">
+      <img src="{{ images[i] }}" width="300" height="200">
+    </button>
+    {% endfor %}
     {% else %}
-      <p>No images found.</p>
+    <p>No images found.</p>
     {% endif %}
-  </body>
+    <br>
+    {% if error_message %}
+    <script>
+      var alert_msg = '{{ error_message|tojson }}';
+      alert(alert_msg)
+    </script>
+    {% endif %}
+    <input type="hidden" name="attempts_remaining" value="{{ attempts_remaining }}">
+  </form>
+</body>
+
 </html>
