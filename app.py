@@ -53,7 +53,7 @@ def upload():
 def image():
     if request.method == 'POST':
         # Get email input from form
-        global email
+        # global email
         email = request.form.get('email')
 
         # Get user info from Firebase Authentication
@@ -86,6 +86,7 @@ def my_fun():
     response =requests.get(image_url)
     img = Image.open(BytesIO(response.content))
     img = np.array(img)
+    img = cv2.cvtColor(img, cv2.COLOR_RGB2BGR)
     # img=cv2.imread("static/images/test.jpg")
     image = cv2.resize(img, (500,500))
     (h,w)=image.shape[:2]
@@ -122,8 +123,8 @@ def login_page():
         bucket = storage.bucket()
         blobs = bucket.list_blobs()
         expiration_time = timedelta(minutes=5)
-        all_images = []
-        some_images = []
+        all_images = []     # this list contains all the images from the database
+        some_images = []    # this list will contain only the 6 images from the database
         for blob in blobs:
             all_images.append(blob.generate_signed_url(expiration=datetime.utcnow() + expiration_time))
 
@@ -135,10 +136,19 @@ def login_page():
         
         if user_:
             blob_2 = bucket.blob(f'{user_.uid}.jpg')
-            some_images.append(blob_2.generate_signed_url(expiration=datetime.utcnow() + expiration_time))
+            global specific_image_url
+            specific_image_url = blob_2.generate_signed_url(expiration=datetime.utcnow() + expiration_time)
+            some_images.append(specific_image_url)
 
         # Randomly select 6 images from the list of all images
         images = random.sample(all_images, 5)
+        def unique_image_checker():
+            for ele in range(5):
+                if(images[ele]==specific_image_url):
+                    images.remove(images[ele])
+                    images.insert(ele, random.sample(all_images,1))
+                    unique_image_checker()
+                    break
         for ele in range(5):
             some_images.append(images[ele])
         # set(some_images)
