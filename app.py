@@ -9,11 +9,12 @@ import firebase_admin
 from firebase_admin import credentials, auth, storage
 from PIL import Image
 import numpy as np
+import random
 
 app = Flask(__name__)
 
 # Initialize Firebase credentials
-cred = credentials.Certificate('D:/second_year/4th SEM/edi_mark_1/Authentication_System/advanced-authentication-3ba33-firebase-adminsdk-basti-91ee0a3617(1).json')
+cred = credentials.Certificate('D:/AI-B[Sem 4]/EDI_Sem4/advanced-authentication-3ba33-firebase-adminsdk-basti-91ee0a3617.json')
 firebase_admin.initialize_app(cred,{
     'storageBucket' : 'advanced-authentication-3ba33.appspot.com'
 })
@@ -52,7 +53,7 @@ def upload():
 def image():
     if request.method == 'POST':
         # Get email input from form
-        global email
+        # global email
         email = request.form.get('email')
 
         # Get user info from Firebase Authentication
@@ -85,6 +86,7 @@ def my_fun():
     response =requests.get(image_url)
     img = Image.open(BytesIO(response.content))
     img = np.array(img)
+    img = cv2.cvtColor(img, cv2.COLOR_RGB2BGR)
     # img=cv2.imread("static/images/test.jpg")
     image = cv2.resize(img, (500,500))
     (h,w)=image.shape[:2]
@@ -112,32 +114,68 @@ def my_fun():
 
     return render_template("index2.html", encoded_imgs=encoded_imgs)
 
-# @app.route('/half')
-# def my_fun():
-#     bucket = storage.bucket()
-#     blob = bucket.blob(f'{user.uid}.jpg')
-#     expiration_time = timedelta(minutes=5)
-#     image_url = blob.generate_signed_url(expiration=datetime.utcnow() + expiration_time)
-#     response =requests.get(image_url)
-#     img = Image.open(BytesIO(response.content))
-#     img = np.array(img)
-#     image = cv2.resize(img, (500,500))
+@app.route('/login', methods=['GET', 'POST'])
+def login_page():
+    if request.method == 'POST':
+        email = request.form['email']
 
-#     # Divide the image into four equal parts
-#     (h,w)=image.shape[:2]
-#     (h_step, w_step)=(h//2, w//2)
-#     parts=[image[:h_step, :w_step], 
-#            image[:h_step, w_step:], 
-#            image[h_step:, :w_step], 
-#            image[h_step:, w_step:]]
+        # retrieve images from firestore storage
+        bucket = storage.bucket()
+        blobs = bucket.list_blobs()
+        expiration_time = timedelta(minutes=5)
+        all_images = []     # this list contains all the images from the database
+        global some_images
+        some_images = []    # this list will contain only the 6 images from the database
+        for blob in blobs:
+            all_images.append(blob.generate_signed_url(expiration=datetime.utcnow() + expiration_time))
 
-#     encoded_imgs=[]
-#     for part in parts:
-#         _, data = cv2.imencode(".jpg", part)
-#         encoded_part = base64.b64encode(data).decode('utf-8')
-#         encoded_imgs.append(encoded_part)
+        # get user's specific image by id
+        try:
+            user_ = auth.get_user_by_email(email)
+        except:
+            return "User not found", 404
+        
+        if user_:
+            blob_2 = bucket.blob(f'{user_.uid}.jpg')
+            global specific_image_url
+            specific_image_url = blob_2.generate_signed_url(expiration=datetime.utcnow() + expiration_time)
+            some_images.append(specific_image_url)
 
-#     return render_template("index2.html", encoded_imgs=encoded_imgs)
+        # Randomly select 6 images from the list of all images
+        images = random.sample(all_images, 5)
+        def unique_image_checker():
+            for ele in range(5):
+                if(images[ele]==specific_image_url):
+                    images.remove(images[ele])
+                    images.insert(ele, random.sample(all_images,1))
+                    unique_image_checker()
+                    break
+        for ele in range(5):
+            some_images.append(images[ele])
+        # set(some_images)
+        random.shuffle(some_images)
+
+        attempts_remaining = 3
+
+        return render_template('login.html', images=some_images, attempts_remaining=attempts_remaining)
+    
+    return render_template('login.html')
+
+@app.route('/verify', methods=['POST'])
+def verify_page():
+    specific_image = specific_image_url
+    selected_image = request.form['selected_image']
+    attempts_remaining = int(request.form['attempts_remaining'])
+    if specific_image == selected_image:
+        # TODO: return the file after a successful image selection
+        return "Verification successful!"
+    else:
+        attempts_remaining -= 1
+        if attempts_remaining > 0:
+            error_message = f"Wrong image selected!\nSelect the correct image\nOnly {attempts_remaining} attempts left"
+            return render_template('login.html', error_message=error_message, images=some_images, attempts_remaining=attempts_remaining)
+        else:
+            return "Verification failed! Maximum number of attempts reached."
 
 if __name__ == '__main__':
     app.run(debug=True)
