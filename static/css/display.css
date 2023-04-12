@@ -223,7 +223,7 @@ button[type=submit] {
 img {
     display: block;
     margin: auto;
-    margin-top: 50px;
+    /* margin-top: 50px; */
 }
   
 /* Style for grid size selection */
@@ -279,4 +279,26 @@ select {
     margin-left: 25px;
     font-size:medium;
     
+}
+
+.row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+  }
+.cell {
+    margin: 5px;
+    border: 1px solid black;
+  }
+
+
+.grid-item{
+    text-align: center;
+}
+
+#bt{
+    position: relative;
+    /* height: 50px;
+    width: 50px; */
 }

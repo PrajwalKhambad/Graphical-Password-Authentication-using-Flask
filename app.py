@@ -14,7 +14,7 @@ import random
 app = Flask(__name__)
 
 # Initialize Firebase credentials
-cred = credentials.Certificate('D:/AI-B[Sem 4]/EDI_Sem4/advanced-authentication-3ba33-firebase-adminsdk-basti-91ee0a3617.json')
+cred = credentials.Certificate('D:/2nd Year/Sem-2/advanced-authentication-3ba33-firebase-adminsdk-basti-91ee0a3617.json')
 firebase_admin.initialize_app(cred,{
     'storageBucket' : 'advanced-authentication-3ba33.appspot.com'
 })
@@ -49,11 +49,73 @@ def upload():
     return render_template('image_upload.html')
 
 
+@app.route('/option' , methods=['GET', 'POST'])
+def option():
+    if request.method=="POST":
+        sel=request.form["grid"]
+        em=request.form["em"]
+        em=auth.get_user_by_email(em)
+        # return "Selected is {}".format(sel)
+        if sel=="2X2":
+            bucket = storage.bucket()
+            blob = bucket.blob(f'{em.uid}.jpg')
+            expiration_time = timedelta(minutes=5)
+            image_url = blob.generate_signed_url(expiration=datetime.utcnow() + expiration_time, method='GET')
+            response =requests.get(image_url)
+            img = Image.open(BytesIO(response.content))
+            width, height = img.size
+            cell_width, cell_height = width //2 , height // 2
+
+            cells = []
+            for i in range(2):
+                row = []
+                for j in range(2):
+                    # Define bounding box for cell
+                    box = (j * cell_width, i * cell_height, (j + 1) * cell_width, (i + 1) * cell_height)
+                    cell = img.crop(box)
+
+                    # Encode cell as base64
+                    buffered = io.BytesIO()
+                    cell.save(buffered, format="PNG")
+                    img_str = base64.b64encode(buffered.getvalue()).decode('ascii')
+                    row.append(f"data:image/png;base64,{img_str}")
+
+                # Append row to grid
+                cells.append(row)
+
+        elif sel=="3X3":
+            bucket = storage.bucket()
+            blob = bucket.blob(f'{em.uid}.jpg')
+            expiration_time = timedelta(minutes=5)
+            image_url = blob.generate_signed_url(expiration=datetime.utcnow() + expiration_time, method='GET')
+            response =requests.get(image_url)
+            img = Image.open(BytesIO(response.content))
+            width, height = img.size
+            cell_width, cell_height = width //2 , height // 2
+
+            cells = []
+            for i in range(3):
+                row = []
+                for j in range(3):
+                    # Define bounding box for cell
+                    box = (j * cell_width, i * cell_height, (j + 1) * cell_width, (i + 1) * cell_height)
+                    cell = img.crop(box)
+
+                    # Encode cell as base64
+                    buffered = io.BytesIO()
+                    cell.save(buffered, format="PNG")
+                    img_str = base64.b64encode(buffered.getvalue()).decode('ascii')
+                    row.append(f"data:image/png;base64,{img_str}")
+
+                # Append row to grid
+                cells.append(row)
+    return render_template('display.html', email=email, imgs=cells)
+
 @app.route('/display', methods=['GET', 'POST'])
 def image():
     if request.method == 'POST':
         # Get email input from form
-        # global email
+        global email
         email = request.form.get('email')
 
         # Get user info from Firebase Authentication
@@ -69,13 +131,19 @@ def image():
         expiration_time = timedelta(minutes=5)
         image_url = blob.generate_signed_url(expiration=datetime.utcnow() + expiration_time,
             method='GET')
-        print(image_url)
+        # print(image_url)
+
+        # grid=request.form["grid"]
+
+        # if len(cells)!=0:
+        #     imgs=cells
 
         # Render HTML with image URL and email
-        return render_template('display.html', image_url=image_url, email=email)
+        return render_template('display.html', image_url=image_url, email=email,)
 
     # If request method is GET, show form to input email
     return render_template('display.html')
+
 
 @app.route('/half')
 def my_fun():
