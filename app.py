@@ -14,7 +14,18 @@ import random
 app = Flask(__name__)
 
 # Initialize Firebase credentials
-cred = credentials.Certificate('D:/2nd Year/Sem-2/advanced-authentication-3ba33-firebase-adminsdk-basti-91ee0a3617.json')
+# Prajwal:
+cred = credentials.Certificate('D:/AI-B[Sem 4]/EDI_Sem4/advanced-authentication-3ba33-firebase-adminsdk-basti-91ee0a3617.json')
+
+# Bhushan:
+# cred = credentials.Certificate('D:/2nd Year/Sem-2/advanced-authentication-3ba33-firebase-adminsdk-basti-91ee0a3617.json')
+
+# Rohan:
+
+# Anish:
+
+# Manasi:
+
 firebase_admin.initialize_app(cred,{
     'storageBucket' : 'advanced-authentication-3ba33.appspot.com'
 })
@@ -91,7 +102,7 @@ def option():
             response =requests.get(image_url)
             img = Image.open(BytesIO(response.content))
             width, height = img.size
-            cell_width, cell_height = width //2 , height // 2
+            cell_width, cell_height = width //3 , height // 3
 
             cells = []
             for i in range(3):
@@ -185,7 +196,8 @@ def my_fun():
 @app.route('/login', methods=['GET', 'POST'])
 def login_page():
     if request.method == 'POST':
-        email = request.form['email']
+        global email_
+        email_ = request.form['email']
 
         # retrieve images from firestore storage
         bucket = storage.bucket()
@@ -198,8 +210,9 @@ def login_page():
             all_images.append(blob.generate_signed_url(expiration=datetime.utcnow() + expiration_time))
 
         # get user's specific image by id
+        global user_
         try:
-            user_ = auth.get_user_by_email(email)
+            user_ = auth.get_user_by_email(email_)
         except:
             return "User not found", 404
         
@@ -236,7 +249,8 @@ def verify_page():
     attempts_remaining = int(request.form['attempts_remaining'])
     if specific_image == selected_image:
         # TODO: return the file after a successful image selection
-        return "Verification successful!"
+        # return "Verification successful!"
+        return render_template('authentication.html', email=email_)
     else:
         attempts_remaining -= 1
         if attempts_remaining > 0:
@@ -244,6 +258,67 @@ def verify_page():
             return render_template('login.html', error_message=error_message, images=some_images, attempts_remaining=attempts_remaining)
         else:
             return "Verification failed! Maximum number of attempts reached."
+            
+        
+@app.route('/authenticate' , methods=['GET', 'POST'])
+def authenticate():
+    if request.method=="POST":
+        sel=request.form["grid"]
+        if sel=="2X2":
+            bucket = storage.bucket()
+            blob = bucket.blob(f'{user_.uid}.jpg')
+            expiration_time = timedelta(minutes=5)
+            image_url = blob.generate_signed_url(expiration=datetime.utcnow() + expiration_time, method='GET')
+            response =requests.get(image_url)
+            img = Image.open(BytesIO(response.content))
+            width, height = img.size
+            cell_width, cell_height = width //2 , height // 2
+
+            cells = []
+            for i in range(2):
+                row = []
+                for j in range(2):
+                    # Define bounding box for cell
+                    box = (j * cell_width, i * cell_height, (j + 1) * cell_width, (i + 1) * cell_height)
+                    cell = img.crop(box)
+
+                    # Encode cell as base64
+                    buffered = io.BytesIO()
+                    cell.save(buffered, format="PNG")
+                    img_str = base64.b64encode(buffered.getvalue()).decode('ascii')
+                    row.append(f"data:image/png;base64,{img_str}")
+
+                # Append row to grid
+                cells.append(row)
+
+        elif sel=="3X3":
+            bucket = storage.bucket()
+            blob = bucket.blob(f'{user_.uid}.jpg')
+            expiration_time = timedelta(minutes=5)
+            image_url = blob.generate_signed_url(expiration=datetime.utcnow() + expiration_time, method='GET')
+            response =requests.get(image_url)
+            img = Image.open(BytesIO(response.content))
+            width, height = img.size
+            cell_width, cell_height = width //3 , height // 3
+
+            cells = []
+            for i in range(3):
+                row = []
+                for j in range(3):
+                    # Define bounding box for cell
+                    box = (j * cell_width, i * cell_height, (j + 1) * cell_width, (i + 1) * cell_height)
+                    cell = img.crop(box)
+
+                    # Encode cell as base64
+                    buffered = io.BytesIO()
+                    cell.save(buffered, format="PNG")
+                    img_str = base64.b64encode(buffered.getvalue()).decode('ascii')
+                    row.append(f"data:image/png;base64,{img_str}")
+
+                # Append row to grid
+                cells.append(row)
+    return render_template('authentication.html', email=email_, imgs=cells)
+
 
 if __name__ == '__main__':
     app.run(debug=True)

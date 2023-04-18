@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Authenticate Image</title>
+    <link rel="stylesheet" href="static/css/display.css">
+</head>
+
+<body>
+
+    <div class="center">
+        <div class="txt_field">
+            <div class="email">
+                <h3>Email:</h3>
+            </div>
+            <h3>{{ email }}</h3>
+        </div>
+
+        <div class="select">
+            <form action="/authenticate" method="post">
+                <input type="submit" value="2X2" name="grid">
+                <input type="submit" value="3X3" name="grid">
+                <input type="hidden" value="{{email}}" name="em">
+            </form>
+            <br>
+        </div>
+
+        <hr style="border-width: 2px;">
+
+        {%if imgs%}
+        <div class="grid-item">
+            {% for i in imgs %}
+            {% for j in i%}
+            <button id="bt">
+                <img src="{{ j }}" width="100" height=auto>
+            </button>
+            {%endfor%}
+            <br>
+            {%endfor%}
+        </div>
+
+        {% else %}
+        <div class="image-show">
+            <img src="{{ image_url }}" style="max-width: 700px; max-height: 350px;">
+        </div>
+        {%endif%}
+    </div>
+
+
+</body>
+
+</html>
