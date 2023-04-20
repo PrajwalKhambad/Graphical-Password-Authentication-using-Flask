@@ -29,16 +29,25 @@
         <hr style="border-width: 2px;">
 
         {%if imgs%}
+        <!-- {% set cnt =10 %} -->
         <div class="grid-item">
             {% for i in imgs %}
+            {% set c=loop.index%}
             {% for j in i%}
-            <button id="bt">
-                <img src="{{ j }}" width="100" height=auto>
+            <button class="bt" value="{{c}}{{loop.index}}">
+                <img src="{{ j }}" width="100" height=auto >
+              
             </button>
+            <!-- {% set cnt = cnt + 1 %} -->
             {%endfor%}
             <br>
             {%endfor%}
         </div>
+        <form action="/check" method="post">
+            <input type="text" id="value" name="value">
+            <input type="hidden" value="{{email}}" name="mail">
+            <input type="submit" value="Validate">
+          </form>
 
         {% else %}
         <div class="image-show">
@@ -49,5 +58,5 @@
 
 
 </body>
-
+<script src="static/javascript/value.js"></script>
 </html>
