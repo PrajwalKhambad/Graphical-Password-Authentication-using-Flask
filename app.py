@@ -10,6 +10,11 @@ from firebase_admin import credentials, auth, storage, firestore
 from PIL import Image
 import numpy as np
 import random
+from cryptography.fernet import Fernet
+
+#Initializing encryption key
+key = Fernet.generate_key()
+f=Fernet(key)
 
 app = Flask(__name__)
 
@@ -325,6 +330,8 @@ def add_password():
     if request.method=="POST":
         mail=request.form['mail']
         num=request.form['value']
+        num=num.encode('utf-8')
+        num=f.encrypt(num)
         id = auth.get_user_by_email(mail).uid
         db=firestore.client()
         doc_ref = db.collection('passwords')
@@ -341,6 +348,7 @@ def check():
         db=firestore.client()
         doc_ref = db.collection('passwords').document(id)
         key = doc_ref.get().to_dict()["key"]
+        key=f.decrypt(key).decode()
         if(num==key):
             return "Valid Password........."
     return "Invalid Password......"
