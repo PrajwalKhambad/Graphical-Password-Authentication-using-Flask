@@ -15,12 +15,13 @@ app = Flask(__name__)
 
 # Initialize Firebase credentials
 # Prajwal:
-cred = credentials.Certificate('D:/AI-B[Sem 4]/EDI_Sem4/advanced-authentication-3ba33-firebase-adminsdk-basti-91ee0a3617.json')
+# cred = credentials.Certificate('D:/AI-B[Sem 4]/EDI_Sem4/advanced-authentication-3ba33-firebase-adminsdk-basti-91ee0a3617.json')
 
 # Bhushan:
 # cred = credentials.Certificate('D:/2nd Year/Sem-2/advanced-authentication-3ba33-firebase-adminsdk-basti-91ee0a3617.json')
 
 # Rohan:
+# cred = credentials.Certificate('D:/second_year/4th SEM/git_repo/mark5/Authentication_System/advanced-authentication-3ba33-firebase-adminsdk-basti-91ee0a3617.json')
 
 # Anish:
 
@@ -238,7 +239,7 @@ def login_page():
 
         attempts_remaining = 3
 
-        return render_template('login.html', images=some_images, attempts_remaining=attempts_remaining)
+        return render_template('login.html', images=some_images, attempts_remaining=attempts_remaining,)
     
     return render_template('login.html')
 
