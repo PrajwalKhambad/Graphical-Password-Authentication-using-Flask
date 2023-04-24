@@ -14,7 +14,13 @@ import random
 app = Flask(__name__)
 
 # Initialize Firebase credentials
-cred = credentials.Certificate('D:/AI-B[Sem 4]/EDI_Sem4/advanced-authentication-3ba33-firebase-adminsdk-basti-91ee0a3617.json')
+# cred = credentials.Certificate('D:/AI-B[Sem 4]/EDI_Sem4/advanced-authentication-3ba33-firebase-adminsdk-basti-91ee0a3617.json')
+# firebase_admin.initialize_app(cred,{
+#     'storageBucket' : 'advanced-authentication-3ba33.appspot.com'
+# })
+
+##rohan
+cred = credentials.Certificate('D:/second_year/4th SEM/edi_mark_1/Authentication_System/advanced-authentication-3ba33-firebase-adminsdk-basti-91ee0a3617(1).json')
 firebase_admin.initialize_app(cred,{
     'storageBucket' : 'advanced-authentication-3ba33.appspot.com'
 })
@@ -114,11 +120,11 @@ def my_fun():
 
     return render_template("index2.html", encoded_imgs=encoded_imgs)
 
-@app.route('/login', methods=['GET', 'POST'])
+@app.route('/login1', methods=['GET', 'POST'])
 def login_page():
     if request.method == 'POST':
         email = request.form['email']
-
+        
         # retrieve images from firestore storage
         bucket = storage.bucket()
         blobs = bucket.list_blobs()
@@ -130,6 +136,7 @@ def login_page():
             all_images.append(blob.generate_signed_url(expiration=datetime.utcnow() + expiration_time))
 
         # get user's specific image by id
+        global user_
         try:
             user_ = auth.get_user_by_email(email)
         except:
@@ -142,7 +149,7 @@ def login_page():
             some_images.append(specific_image_url)
 
         # Randomly select 6 images from the list of all images
-        images = random.sample(all_images, 5)
+        images = random.sample(all_images, 6)
         def unique_image_checker():
             for ele in range(5):
                 if(images[ele]==specific_image_url):
@@ -157,9 +164,9 @@ def login_page():
 
         attempts_remaining = 3
 
-        return render_template('login.html', images=some_images, attempts_remaining=attempts_remaining)
+        return render_template('login1.html', images=some_images, attempts_remaining=attempts_remaining)
     
-    return render_template('login.html')
+    return render_template('login1.html')
 
 @app.route('/verify', methods=['POST'])
 def verify_page():

@@ -13,14 +13,18 @@
     <br><br>
     <input type="submit" value="Submit">
   </form>
+
   <h2>Images:</h2>
   <p>Select the image that you added during sign up</p>
   {% if attempts_remaining %}
   <p>{{ attempts_remaining }} attempts remaining</p>
   {% endif %}
+
+  
+  <!-- {% if email %} -->
   <form method="POST" action="/verify">
     {% if images %}
-    {% for i in range(6) %}
+    {% for i in range(8) %}
     <button name="selected_image" value="{{ images[i] }}">
       <img src="{{ images[i] }}" width="300" height="200">
     </button>
@@ -37,6 +41,26 @@
     {% endif %}
     <input type="hidden" name="attempts_remaining" value="{{ attempts_remaining }}">
   </form>
+
+
+<!-- 
+  {% endif %}
+  <h1>Login</h1>
+  <form method="POST" action="/login">
+    <label>Email:</label>
+    <input type="email" name="email">
+    <br><br>
+    <input type="submit" value="Submit">
+  </form>
+
+  <h2>Images:</h2>
+  <p>Select the image that you added during sign up</p>
+  {% if attempts_remaining %}
+  <p>{{ attempts_remaining }} attempts remaining</p>
+  {% endif %} -->
+  
+
+
 </body>
 
 </html>

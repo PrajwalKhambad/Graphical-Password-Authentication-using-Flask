@@ -1,0 +1,171 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700;800&display=swap");
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body,
+input {
+    font-family: "Poppins", sans-serif;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+    background-size: 400% 400%;
+    animation: gradient-anim 15s ease infinite;
+    height: 100vh;
+    overflow: hidden;
+}
+
+@keyframes gradient-anim {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+.txt_field {
+    height: 30px;
+    border-radius: 55px;
+    display: grid;
+    grid-template-columns: 15% 85%;
+    padding: 0 0.4rem;
+    position: relative;
+    margin-top: 45px;
+    /* margin-left: 100px; */
+    align-items: center;
+    align-content: center;
+}
+
+input[type=email] {
+
+    outline: none;
+    background-color: #C9EEFF;
+    border: none;
+    width: 400px;
+    height: 60px;
+    padding: 0.7rem;
+    border-radius: 55px;
+    font-weight: 600;
+    font-size: large;
+    display: grid;
+
+}
+
+.input::placeholder {
+    color: #aaa;
+    font-weight: 500;
+}
+
+
+/* button[type=submit] {
+
+    background-color: #0014FF;
+    color: white;
+    padding: 10px 20px;
+    margin-top: 45px;
+    margin-left: 120px;
+    height: 60px;
+    width: 250px;
+    font-weight: 600;
+    font-size: large;
+    border-radius: 100px;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 0 5px rgba(0,0,0,0.1);
+    text-align: center;
+    
+} */
+
+.buttons[type=submit] {
+    margin: 10% 50% 10% 50%;
+    text-align: center;
+}
+
+.btn-hover {
+    width: 200px;
+    font-size: 16px;
+    font-weight: 600;
+    color: #fff;
+    cursor: pointer;
+    margin: 20px 0 0 145px;
+    /* margin-left: 120px; */
+    height: 60px;
+    text-align: center;
+    border: none;
+    background-size: 300% 100%;
+
+    border-radius: 50px;
+    moz-transition: all .4s ease-in-out;
+    -o-transition: all .4s ease-in-out;
+    -webkit-transition: all .4s ease-in-out;
+    transition: all .4s ease-in-out;
+}
+
+.btn-hover:hover {
+    background-position: 100% 0;
+    /* moz-transition: all .4s ease-in-out; */
+    -o-transition: all .4s ease-in-out;
+    -webkit-transition: all .4s ease-in-out;
+    transition: all .4s ease-in-out;
+}
+
+.btn-hover:focus {
+    outline: none;
+}
+
+.btn-hover.color-1 {
+    background-image: linear-gradient(to right, #25aae1, #40e495, #30dd8a, #2bb673);
+    box-shadow: 0 4px 15px 0 rgba(49, 196, 190, 0.75);
+}
+
+.log {
+    position: absolute;
+    /* padding: 25px; */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 550px;
+    height: 450px;
+    margin-bottom: 300px;
+    background-color: #FFFBEB;
+    /* background-color: #FEFCF3; */
+    /* background: white; */
+    border-radius: 20px;
+    box-shadow: 10px 10px 15px rgba(0, 0, 0, 0.05);
+    text-align: center;
+
+}
+
+
+.loginside {
+    position: a;
+    padding: 20px;
+    margin-top: 50px;
+}
+
+h1 {
+    text-align: center;
+    padding: 20px 0 10px 0;
+}
+
+hr {
+    border-width: 3px;
+}
+
+#email {
+    text-align: center;
+    margin-left: 50px;
+    margin-bottom: 35px;
+}
