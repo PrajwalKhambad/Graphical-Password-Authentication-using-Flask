@@ -93,7 +93,7 @@ def option():
 
                 # Append row to grid
                 cells.append(row)
-
+                                
         elif sel=="3X3":
             bucket = storage.bucket()
             blob = bucket.blob(f'{em.uid}.jpg')
