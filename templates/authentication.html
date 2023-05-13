@@ -44,7 +44,7 @@
             {%endfor%}
         </div>
         <form action="/check" method="post">
-            <input type="text" id="value" name="value">
+            <input type="password" id="value" name="value" onfocus="this.value=''">
             <input type="hidden" value="{{email}}" name="mail">
             <input type="submit" value="Validate">
           </form>

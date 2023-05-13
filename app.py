@@ -13,8 +13,15 @@ import random
 from cryptography.fernet import Fernet
 
 #Initializing encryption key
-key = Fernet.generate_key()
-f=Fernet(key)
+# key = Fernet.generate_key()
+# f=Fernet(key)
+
+# with open("pass.key","ab") as file:
+#     file.write(key)
+
+def get_key():
+    return open("pass.key","rb").read()
+
 
 app = Flask(__name__)
 
@@ -330,8 +337,10 @@ def add_password():
     if request.method=="POST":
         mail=request.form['mail']
         num=request.form['value']
-        num=num.encode('utf-8')
-        num=f.encrypt(num)
+        key=get_key()            # Get Fernet key
+        f=Fernet(key)            # Fernet key
+        num=num.encode('utf-8')  # Encode num into bytes
+        num=f.encrypt(num)       # Encrypt
         id = auth.get_user_by_email(mail).uid
         db=firestore.client()
         doc_ref = db.collection('passwords')
@@ -348,7 +357,12 @@ def check():
         db=firestore.client()
         doc_ref = db.collection('passwords').document(id)
         key = doc_ref.get().to_dict()["key"]
-        key=f.decrypt(key).decode()
+
+        f=Fernet(get_key())              # Get key from file
+        key=f.decrypt(key).decode()      # Decrypt password stored in base and decode
+        # print(key)
+
+
         if(num==key):
             return "Valid Password........."
     return "Invalid Password......"

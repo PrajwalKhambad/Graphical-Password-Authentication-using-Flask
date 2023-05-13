@@ -44,7 +44,7 @@
     </div>
     
   <form action="/pass" method="post">
-    <input type="text" id="value" name="value">
+    <input type="text" id="value" name="value"  onfocus="this.value=''">
     <input type="hidden" value="{{email}}" name="mail">
     <input type="submit" value="Add Password">
   </form>
