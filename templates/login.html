@@ -25,6 +25,13 @@
       <img src="{{ images[i] }}" width="300" height="200">
     </button>
     {% endfor %}
+    <button type="button" onclick="showHint()">Hint</button>
+    <p id="hint" style="display: none">{{ hint }}</p>
+    <script>
+      function showHint() {
+        document.getElementById("hint").style.display = "block";
+      }
+    </script>
     {% else %}
     <p>No images found.</p>
     {% endif %}
