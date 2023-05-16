@@ -15,7 +15,7 @@ app = Flask(__name__)
 
 # Initialize Firebase credentials
 # Prajwal:
-cred = credentials.Certificate('D:/AI-B[Sem 4]/EDI_Sem4/advanced-authentication-3ba33-firebase-adminsdk-basti-91ee0a3617.json')
+# cred = credentials.Certificate('D:/AI-B[Sem 4]/EDI_Sem4/advanced-authentication-3ba33-firebase-adminsdk-basti-91ee0a3617.json')
 
 # Bhushan:
 # cred = credentials.Certificate('D:/2nd Year/Sem-2/advanced-authentication-3ba33-firebase-adminsdk-basti-91ee0a3617.json')
@@ -25,6 +25,7 @@ cred = credentials.Certificate('D:/AI-B[Sem 4]/EDI_Sem4/advanced-authentication-
 # Anish:
 
 # Manasi:
+cred = credentials.Certificate('E:/Sem4_EDI/advanced-authentication-3ba33-firebase-adminsdk-basti-91ee0a3617.json')
 
 firebase_admin.initialize_app(cred,{
     'storageBucket' : 'advanced-authentication-3ba33.appspot.com'
@@ -54,10 +55,10 @@ def upload():
         image_url = blob.generate_signed_url(expiration=300)
 
         # Render the image_upload.html template with success message
-        return render_template('image_upload.html', message=f'Successfully signed up! Image URL: {image_url}')
+        return render_template('image_upload.html', message=f'Successfully signed up! Image URL: {image_url}', show_button = True)
 
     # If request method is GET, render the image_upload.html template
-    return render_template('image_upload.html')
+    return render_template('image_upload.html',show_button = False)
 
 
 @app.route('/option' , methods=['GET', 'POST'])

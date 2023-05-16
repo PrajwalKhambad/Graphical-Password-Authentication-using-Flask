@@ -48,6 +48,12 @@
           <button type="submit">Submit</button>
           <!-- <input type="submit" class="btn" value="Sign up" /> -->
         </form>
+
+        {% if show_button %}
+        <div id="success-button">
+          <button class="btn" onclick="redirectToDisplayPage()">Set Graphical Password</button>
+        </div>
+        {% endif %}
       </div>
     </div>
 
@@ -80,6 +86,11 @@
   </div>
 
   <script src="static/javascript/app.js"></script>
+  <script>
+    function redirectToDisplayPage() {
+      window.location.href = "/display";
+    }
+  </script>
 </body>
 
 </html>
