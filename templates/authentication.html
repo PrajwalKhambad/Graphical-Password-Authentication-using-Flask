@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Authenticate Image</title>
+    <link rel="stylesheet" href="static/css/authentication.css">
+</head>
+
+<body>
+
+    <div class="center">
+        <div class="txt_field">
+            <div class="email">
+                <h3>Email:</h3>
+            </div>
+            <h3>{{ email }}</h3>
+        </div>
+
+        <div class="select">
+            <form action="/authenticate" method="post">
+                <input type="submit" value="2X2" name="grid">
+                <input type="submit" value="3X3" name="grid">
+                <input type="hidden" value="{{email}}" name="em">
+            </form>
+            <br>
+        </div>
+
+        <hr style="border-width: 2px;">
+
+        {%if imgs%}
+        <!-- {% set cnt =10 %} -->
+        <div class="grid-item">
+            {% for i in imgs %}
+            {% set c=loop.index%}
+            {% for j in i%}
+            <button class="bt" value="{{c}}{{loop.index}}">
+                <img src="{{ j }}" width="160" height="100" >
+              
+            </button>
+            <!-- {% set cnt = cnt + 1 %} -->
+            {%endfor%}
+            <br>
+            {%endfor%}
+        </div>
+
+        <div class="arr">
+            <form id="my-form" action="/check" method="post">
+                <input type="password" id="value" name="value" placeholder="password" onfocus="this.value=''">
+                <input type="hidden" value="{{email}}" name="mail">
+                <input type="submit" value="Validate">
+            </form>
+        </div>
+
+        {% else %}
+        <div class="image-show">
+            <img src="{{ image_url }}" style="max-width: 700px; max-height: 350px;">
+        </div>
+        {%endif%}
+    </div>
+
+
+</body>
+<script src="static/javascript/value.js"></script>
+</html>

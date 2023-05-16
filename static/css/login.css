@@ -40,123 +40,14 @@ body{
 	}
 }
 
-/*
-.txt_field{
-    height: 30px;
-    border-radius: 55px;
-    display: grid;
-    grid-template-columns: 15% 85%;
-    padding: 0 0.4rem;
-    position: relative;
-    margin-top: 45px;
-    align-items: center;
-    align-content: center;
-}
-
-input[type=email] {
-
-    outline: none;
-    background-color: #C9EEFF;
-    border: none;
-    width: 400px;
-    height: 60px;
-    padding: 0.7rem;
-    border-radius: 55px;
-    font-weight: 600;
-    font-size: large;
-    display: grid;
-
-}
-
-.input::placeholder {
-    color: #aaa;
-    font-weight: 500;
-}
-  
-
-.buttons[type=submit]{
-  margin: 10% 50% 10% 50%;
-  text-align: center;
-}
-
-.btn-hover {
-  width: 200px;
-  font-size: 16px;
-  font-weight: 600;
-  color: #fff;
-  cursor: pointer;
-  margin: 20px 0 0 145px;
-  height: 60px;
-  text-align:center;
-  border: none;
-  background-size: 300% 100%;
-
-  border-radius: 50px;
-  moz-transition: all .4s ease-in-out;
-  -o-transition: all .4s ease-in-out;
-  -webkit-transition: all .4s ease-in-out;
-  transition: all .4s ease-in-out;
-}
-  
-.btn-hover:hover {
-  background-position: 100% 0;
-  -o-transition: all .4s ease-in-out;
-  -webkit-transition: all .4s ease-in-out;
-  transition: all .4s ease-in-out;
-}
-
-.btn-hover:focus {
-  outline: none;
-}
-
-.btn-hover.color-1 {
-  background-image: linear-gradient(to right, #25aae1, #40e495, #30dd8a, #2bb673);
-  box-shadow: 0 4px 15px 0 rgba(49, 196, 190, 0.75);
-}
-
-.log{
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 550px;
-    height: 450px;
-    margin-bottom: 300px;
-    background-color: #FFFBEB;
-    border-radius: 20px;
-    box-shadow: 10px 10px 15px rgba(0,0,0,0.05);
-    text-align: center;
-
-}
-
-
-.loginside{
-  position:a;
-  padding: 20px;
-  margin-top: 50px;
-}
-
-h1{
-  text-align: center;
-  padding: 20px 0 10px 0;
-}
-
-hr{
-  border-width: 3px;
-}
-
-#email{
-  text-align: center;
-  margin-left: 50px;
-  margin-bottom: 35px;
-}  */
-
-
 
 
 .grid-container{
-  position: relative;
+  position: absolute;
   display: grid;
+  scroll-behavior: auto;
+  height: 80%;
+  width: 100%;
   grid-template-columns: 1.6fr 1.9fr;
   margin-top: 5%;
   margin-bottom: 5%;
@@ -164,21 +55,28 @@ hr{
   padding-bottom: 0%;
   padding-left: 10%;
   padding-right: 10%;
+  justify-content: center;
   gap: 60px;
 }
 
 .first-card{
-  width: 500px;
-  height: 550px;
+  
   position: relative;
+  width: 100%;
+  height: 100%;
+  padding-bottom: 10%;
+  /* margin-bottom: 10%; */
+  /* position: relative; */
   text-align: center;
 }
 
 
 .log{
   margin-top: 5%;
-  width: 500px;
-  height: 550px;
+  /* width: 500px;
+  height: 550px; */
+  width: 95%;
+  height: 90%;
   text-align: center;
   background-color: #FFFBEB;
   border-radius: 25px;
@@ -198,7 +96,8 @@ hr{
 .loginside{
   position:relative;
   padding: 20px;
-  margin-top: 50px;
+  margin-top: 5%;
+  margin-bottom: 3%;
 }
 
 .txt_field{
@@ -215,7 +114,8 @@ input[type=email] {
   outline: none;
   background-color: #C9EEFF;
   border: none;
-  width: 400px;
+  /* width: 400px; */
+  width: 80%;
   height: 60px;
   padding: 0.7rem;
   border-radius: 55px;
@@ -232,7 +132,8 @@ input[type=email] {
 }
 
 .btn-hover {
-  width: 200px;
+  /* width: 200px; */
+  width: 50%;
   font-size: 16px;
   font-weight: 600;
   color: #fff;
@@ -267,17 +168,27 @@ input[type=email] {
 }
 
 .card{
-  width: 700px;
-  height: 600px;
+  /* width: 700px;
+  height: 600px; */
+  width: 110%;
+  height: 100%;
   position: relative;
   text-align: center;
+  scroll-behavior: auto;
   border-radius: 25px;
 }
 
+.form{
+  scroll-behavior: auto;
+}
+
 .log-image{
-  width: 725px;
-  height: 600px;
+  /* width: 725px;
+  height: 600px; */
+  width: 100%;
+  height: 100%;
   text-align: center;
+  scroll-behavior: auto;
   background-color: #FFFBEB;
   border-radius: 25px;
   box-shadow: 10px 10px 15px rgba(0,0,0,0.05);
@@ -307,21 +218,17 @@ input[type=email] {
 }
 
 .img{
-
-  /* position: relative; */
   padding: 10px;
   border-radius: 10px;
   width: 250px;
   height: 200px;
-  /* margin: 50px; */
-
 }
 
 #b1{
   outline: none;
   margin: 10px;
   padding: 2px;
-  
-  /* border-radius: 25px; */
+  border: none;
+  background-color: #FFFBEB;
 }
 

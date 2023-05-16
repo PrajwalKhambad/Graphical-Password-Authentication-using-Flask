@@ -5,69 +5,76 @@
   <meta charset="utf-8">
   <title>Display Image</title>
   <link rel="stylesheet" href="static/css/display.css">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
-    crossorigin="anonymous"></script>
 </head>
 
 <body>
-
-
+  
   {% if email %}
   <div class="center">
-    <div class="txt_field">
-      <div class="email">
+    <div class="txt_field_1">
+      <div class="email" >
         <h3>Email:</h3>
       </div>
       <h3>{{ email }}</h3>
     </div>
-
+  
     <div class="select">
-      <label for="select">Select a grid size:</label>
-      <select id="select" name="select" onchange="displayOption()">
-        <option value="option1">2 x 2</option>
-        <option value="option2">3 x 3</option>
-      </select>
+      <form action="option" method="post">
+      <input type="submit" value="2X2" name="grid">
+      <input type="submit" value="3X3" name="grid">
+      <input type="hidden" value="{{email}}" name="em">
+      </form>
       <br>
-      <input type="text" id="selectedOption" name="selectedOption" value="Selected Null" readonly>
     </div>
 
     <hr style="border-width: 2px;">
 
+    {%if imgs%}
+    <div class="grid-item">
+    {% for i in imgs %}
+    {% set a=loop.index%}
+    {% for j in i%}
+    {% set b=loop.index%}
+    <button class="bt" value="{{a}}{{b}}">
+      <img src="{{ j }}" width="160" height="100" >
+    </button>
+    {%endfor%}
+    <br>
+    {%endfor%}
+    </div>
+  
+  <div class="arr">
+    <form id="my-form" action="/pass" method="post">
+      <input type="text" id="value" name="value" placeholder="password"  onfocus="this.value=''">
+      <input type="hidden" value="{{email}}" name="mail">
+      <input type="submit" value="Add Password">
+    </form>
+  </div>
+  
+    
+    {% else %}
     <div class="image-show">
       <img src="{{ image_url }}" style="max-width: 700px; max-height: 350px;">
     </div>
-
-
-    {% else %}
-    <div class="abc">
-      <h1>Welcome User!</h1>
-      <h2>Login to continue</h2>
-      <hr>
-      <form method="POST">
-        <div class="txt_field">
-          <input type="email" id="email" name="email" placeholder="         Email" required>
-        </div>
-        <div class="txt_field">
-          <button type="submit" onclick="location.href='Display_Image_1.html'">Show Image</button>
-        </div>
-      </form>
-    </div>
-
-
-    {% endif %}
-    <script>
-      function displayOption() {
-        var selectBox = document.getElementById("select");
-        var selectedOptionBox = document.getElementById("selectedOption");
-        selectedOptionBox.value = selectBox.options[selectBox.selectedIndex].text;
-      }
-    </script>
-
+    {%endif%}
+  </div> 
+ 
+  {% else %}
+  <div class="abc">
+    <h1>Welcome User!</h1>
+    <h2>Login to continue</h2>
+    <hr>
+    <form method="POST">
+      <div class="txt_field">
+        <input type="email" id="email" name="email" placeholder="         Email" required>
+      </div>
+      <div class="txt_field">
+       <button type="submit" onclick="location.href='Display_Image_1.html'">Show Image</button>
+      </div>
+    </form>
   </div>
-
+ 
+  {% endif %}
 </body>
-
+<script src="static/javascript/value.js"></script>
 </html>
