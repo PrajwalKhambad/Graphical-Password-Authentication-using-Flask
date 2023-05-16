@@ -34,10 +34,10 @@ body{
 }
 
 
+
 .grid-item{
     padding:4%;
 }
-
 
 .center{
     position: absolute;
@@ -363,9 +363,11 @@ form#my-form input[type="submit"]:hover {
     position: relative;
     /* height: 50px;
     width: 50px; */
+
 }
 
 .bt{
     height: 0px;
     margin:5px;
+
 }

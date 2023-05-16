@@ -11,12 +11,14 @@
   
   {% if email %}
   <div class="center">
-    <div class="txt_field_1">
+
+    <div class="txt_field">
       <div class="email" >
         <h3>Email:</h3>
       </div>
       <h3>{{ email }}</h3>
     </div>
+ 
   
     <div class="select">
       <form action="option" method="post">
@@ -36,21 +38,22 @@
     {% for j in i%}
     {% set b=loop.index%}
     <button class="bt" value="{{a}}{{b}}">
-      <img src="{{ j }}" width="160" height="100" >
+      <img src="{{ j }}" width="100" height="auto">
     </button>
     {%endfor%}
     <br>
     {%endfor%}
     </div>
-  
-  <div class="arr">
-    <form id="my-form" action="/pass" method="post">
-      <input type="text" id="value" name="value" placeholder="password"  onfocus="this.value=''">
-      <input type="hidden" value="{{email}}" name="mail">
-      <input type="submit" value="Add Password">
-    </form>
-  </div>
-  
+
+    
+  <form action="/pass" method="post">
+    <input type="password" id="value" name="value" onfocus="this.value=''" readonly style="height: 40px; width: 300px;" placeholder="Your graphical password will generate here">
+    <br>
+    <input type="hidden" value="{{email}}" name="mail">
+    <input type="text" id="hint" name="hint" onfocus="this.hint=''" style="height: 40px; width: 300px;" placeholder="Add a Hint">
+    <br><br>
+    <input type="submit" value="Add Password and Hint">
+  </form>
     
     {% else %}
     <div class="image-show">

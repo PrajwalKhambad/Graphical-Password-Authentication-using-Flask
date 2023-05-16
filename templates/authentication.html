@@ -4,7 +4,10 @@
 <head>
     <meta charset="utf-8">
     <title>Authenticate Image</title>
+
     <link rel="stylesheet" href="static/css/authentication.css">
+
+
 </head>
 
 <body>
@@ -35,14 +38,14 @@
             {% set c=loop.index%}
             {% for j in i%}
             <button class="bt" value="{{c}}{{loop.index}}">
-                <img src="{{ j }}" width="160" height="100" >
-              
+                <img src="{{ j }}" width="100" height=auto >
             </button>
             <!-- {% set cnt = cnt + 1 %} -->
             {%endfor%}
             <br>
             {%endfor%}
         </div>
+
 
         <div class="arr">
             <form id="my-form" action="/check" method="post">
@@ -51,6 +54,7 @@
                 <input type="submit" value="Validate">
             </form>
         </div>
+
 
         {% else %}
         <div class="image-show">
