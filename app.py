@@ -6,10 +6,22 @@ from io import BytesIO
 import requests
 import cv2
 import firebase_admin
-from firebase_admin import credentials, auth, storage
+from firebase_admin import credentials, auth, storage, firestore
 from PIL import Image
 import numpy as np
 import random
+from cryptography.fernet import Fernet
+
+#Initializing encryption key
+# key = Fernet.generate_key()
+# f=Fernet(key)
+
+# with open("pass.key","ab") as file:
+#     file.write(key)
+
+def get_key():
+    return open("pass.key","rb").read()
+
 
 app = Flask(__name__)
 
@@ -18,9 +30,10 @@ app = Flask(__name__)
 # cred = credentials.Certificate('D:/AI-B[Sem 4]/EDI_Sem4/advanced-authentication-3ba33-firebase-adminsdk-basti-91ee0a3617.json')
 
 # Bhushan:
-# cred = credentials.Certificate('D:/2nd Year/Sem-2/advanced-authentication-3ba33-firebase-adminsdk-basti-91ee0a3617.json')
+cred = credentials.Certificate('D:/2nd Year/Sem-2/advanced-authentication-3ba33-firebase-adminsdk-basti-91ee0a3617.json')
 
 # Rohan:
+# cred = credentials.Certificate('D:/second_year/4th SEM/git_repo/mark5/Authentication_System/advanced-authentication-3ba33-firebase-adminsdk-basti-91ee0a3617.json')
 
 # Anish:
 
@@ -94,7 +107,7 @@ def option():
 
                 # Append row to grid
                 cells.append(row)
-
+                                
         elif sel=="3X3":
             bucket = storage.bucket()
             blob = bucket.blob(f'{em.uid}.jpg')
@@ -239,7 +252,14 @@ def login_page():
 
         attempts_remaining = 3
 
-        return render_template('login.html', images=some_images, attempts_remaining=attempts_remaining)
+        # retreiving hint
+        db=firestore.client()
+        doc_ref = db.collection('Passwords').document(user_.uid)
+        hint = doc_ref.get().to_dict()["hint"]
+        if(not (hint and not hint.isspace())):
+            hint = "No hint added during setting graphical password!"
+
+        return render_template('login.html', images=some_images, attempts_remaining=attempts_remaining, hint=hint)
     
     return render_template('login.html')
 
@@ -320,6 +340,42 @@ def authenticate():
                 cells.append(row)
     return render_template('authentication.html', email=email_, imgs=cells)
 
+
+@app.route('/pass' , methods=['GET', 'POST'])
+def add_password():
+    if request.method=="POST":
+        mail=request.form['mail']
+        num=request.form['value']
+        hint=request.form['hint']
+        key=get_key()            # Get Fernet key
+        f=Fernet(key)            # Fernet key
+        num=num.encode('utf-8')  # Encode num into bytes
+        num=f.encrypt(num)       # Encrypt
+        id = auth.get_user_by_email(mail).uid
+        db=firestore.client()
+        doc_ref = db.collection('Passwords')
+        res = doc_ref.document(id).set({'password':num, 'hint':hint})
+        return "Password Added......{}".format(res)
+    return "Password not Added...."
+
+@app.route('/check' , methods=['GET', 'POST'])
+def check():
+    if request.method=="POST":
+        mail=request.form['mail']
+        num=request.form['value']
+        id = auth.get_user_by_email(mail).uid
+        db=firestore.client()
+        doc_ref = db.collection('Passwords').document(id)
+        key = doc_ref.get().to_dict()["password"]
+
+        f=Fernet(get_key())              # Get key from file
+        key=f.decrypt(key).decode()      # Decrypt password stored in base and decode
+        # print(key)
+
+
+        if(num==key):
+            return "Valid Password........."
+    return "Invalid Password......"
 
 if __name__ == '__main__':
     app.run(debug=True)

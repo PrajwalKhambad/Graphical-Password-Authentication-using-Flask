@@ -32,14 +32,25 @@
     {%if imgs%}
     <div class="grid-item">
     {% for i in imgs %}
+    {% set a=loop.index%}
     {% for j in i%}
-    <button id="bt">
+    {% set b=loop.index%}
+    <button class="bt" value="{{a}}{{b}}">
       <img src="{{ j }}" width="100" height="auto">
     </button>
     {%endfor%}
     <br>
     {%endfor%}
     </div>
+    
+  <form action="/pass" method="post">
+    <input type="password" id="value" name="value" onfocus="this.value=''" readonly style="height: 40px; width: 300px;" placeholder="Your graphical password will generate here">
+    <br>
+    <input type="hidden" value="{{email}}" name="mail">
+    <input type="text" id="hint" name="hint" onfocus="this.hint=''" style="height: 40px; width: 300px;" placeholder="Add a Hint">
+    <br><br>
+    <input type="submit" value="Add Password and Hint">
+  </form>
     
     {% else %}
     <div class="image-show">
@@ -65,5 +76,5 @@
  
   {% endif %}
 </body>
-
+<script src="static/javascript/value.js"></script>
 </html>
