@@ -34,10 +34,11 @@ body{
 }
 
 
-
 .grid-item{
+    text-align: center;
     padding:4%;
 }
+
 
 .center{
     position: absolute;
@@ -48,12 +49,14 @@ body{
     /* height: 630px; */
     height: 660px;
     margin-bottom: 300px;
-    /* background-color: white; */
-    /* background-color: #FAF7F0; */
-    background-color: #FFFBEB;
-    /* background-color: #ECF9FF; */
+    /* background-color: #FFFBEB; */
     border-radius: 20px;
-    box-shadow: 10px 10px 15px rgba(0,0,0,0.05);
+    /* box-shadow: 10px 10px 15px rgba(0,0,0,0.05); */
+    background: linear-gradient(135deg, rgba(255,255,255,0.1),rgba(255,255,255,0));
+    -webkit-backdrop-filter: blur(20px);
+    backdrop-filter: blur(20px);
+    box-shadow: 0 8px 32px 0  rgba(0,0,0,0.37);
+    border: 1px solid rgba(255,255,255,0.18);
 }
 
 .abc{
@@ -61,22 +64,17 @@ body{
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 520px;
-    height: 480px;
+    width: 550px;
+    height: 500px;
     margin-bottom: 300px;
     background-color: #FFFBEB;
-    /* background-color: #FEFCF3; */
-    /* background: white; */
     border-radius: 20px;
     box-shadow: 10px 10px 15px rgba(0,0,0,0.05);
     text-align: center;
 
 }
 
-.abc form{
-    flex-direction: column;
-    margin-left: 100px;
-}
+
 
 h1{
   text-align: center;
@@ -98,7 +96,7 @@ h3{
 }
 
 hr{
-    border-width: 1.2px;
+    border-width: 0.5rem;
 }
 
 label{
@@ -113,36 +111,31 @@ label{
     border-radius: 55px;
     display: grid;
     grid-template-columns: 15% 85%;
-    padding: 0 0.4rem;
+    /* padding: 0 0.4rem; */
     position: relative;
-    margin-top: 40px;
+    margin-top: 20px;
 }
 
 
 
 /* Style for email form */
-form {
-    position: relative;
-    display: flex;
-    /* flex-direction: column; */
+form{
     text-align: center;
-    align-items: center;
-    /* justify-content: center; */
-    margin-top: 20px;
-    margin-right: 100px;
-    margin-bottom: 100px;
-    /* margin-left: 100px; */
 }
+
   
 label {
     margin-top: 10px;
     margin-bottom: 5px;
 }
+
+.input{
+    display: inline-block;
+}
   
 input[type=email] {
     outline: none;
     background-color: #C9EEFF;
-    display: inline-block;
     border: none;
     width: 400px;
     height: 60px;
@@ -151,43 +144,8 @@ input[type=email] {
     font-weight: 600;
     font-size: large;
     display: grid;
+
 }
-
-input[type=submit]{
-    background-color: #4CAF50;
-    border: none;
-    color: white;
-    width: 150px;
-    height: 50px;
-    padding: 15px 32px;
-    font-weight: 150px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    margin: 8px 10px;
-    cursor: pointer;
-    border-radius: 50px;
-    -webkit-transition-duration: 0.4s;
-    transition-duration: 0.4s;
-}
-
-input[type="submit"]:hover {
-    box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24),0 17px 50px 0 rgba(0,0,0,0.19);
-} 
-
-
-.txt_field_1{
-    height: 30px;
-    border-radius: 55px;
-    display: grid;
-    grid-template-columns: 15% 85%;
-    padding: 0 0.4rem;
-    position: relative;
-    margin-top: 20px;
-}
-
-
 
 .input::placeholder {
     color: #aaa;
@@ -195,77 +153,26 @@ input[type="submit"]:hover {
 }
   
   
-button[type=submit] {
-    background-color: #0014FF;
+input[type=submit]{
+    background-color: #4CAF50; /* Green */
+    border: none;
     color: white;
-    padding: 10px 20px;
-    margin-top: 45px;
-    height: 60px;
-    width: 250px;
-    font-weight: 600;
-    font-size: large;
-    border-radius: 100px;
-    border: none;
-    cursor: pointer;
-    box-shadow: 0 0 5px rgba(0,0,0,0.1);
-}
-  
-  /* Style for displayed image */
-img {
-    display: block;
-    margin: auto;
-    /* margin-top: 50px; */
-}
-  
-/* Style for grid size selection */
-.select form{
-    /* display: inline-block; */
-    width: 400px;
-    text-align: center;
-    margin-right: 30px;
-
-}
-select {
-    padding: 10px;
-    border-radius: 5px;
-    width: 400px;
-    border: none;
-    margin-top: 20px;
-    margin-bottom: 20px;
-    box-shadow: 0 0 5px rgba(0,0,0,0.1);
-}
-  
-/* Style for selected grid size text */
-#selectedOption {
-    margin-top: 10px;
-    padding: 10px;
-    border-radius: 5px;
-    border: none;
-    width: 300px;
-    box-shadow: 0 0 5px rgba(0,0,0,0.1);
-}
-
-.left{
-    margin-left: 100px;
-}
-
-.image-show{
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-  margin-top: 80px;
-  padding: 0 0 15px 0;
-  /* width: 50%; */
-}
-
-.select{
-    /* display: inline-block; */
-    text-align: center;
-    margin: auto;
-    margin-bottom: 20px;
-    width: 350px;
+    width: 150px;
     height: 50px;
-    font-size: large;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 8px 10px;
+    cursor: pointer;
+    border-radius: 50px;
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+}
+
+input[type="submit"]:hover {
+    box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24),0 17px 50px 0 rgba(0,0,0,0.19);
 }
 
 .arr form{
@@ -275,12 +182,12 @@ select {
 
 form#my-form {
     /* display: block; */
-    display: inline-block;
+    display: inline-table;
     margin-left: 290px;
     text-align: center;
 }
 
-form#my-form input[type="text"]{
+form#my-form input[type="password"]{
 
     outline: none;
     background-color: #C9EEFF;
@@ -328,6 +235,41 @@ form#my-form input[type="submit"]:hover {
 } 
 
 
+/* Style for displayed image */
+img {
+    display: block;
+    margin: auto;
+    /* margin-top: 50px; */
+}
+  
+
+/* Style for selected grid size text */
+#selectedOption {
+    margin-top: 10px;
+    padding: 10px;
+    border-radius: 5px;
+    border: none;
+    width: 300px;
+    box-shadow: 0 0 5px rgba(0,0,0,0.1);
+}
+
+.left{
+    margin-left: 100px;
+}
+
+.image-show{
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 80px;
+  padding: 0 0 15px 0;
+  /* width: 50%; */
+}
+
+.select{
+    text-align: center;
+}
+
 #select{
     /* outline: #0014FF; */
     height: auto;
@@ -342,7 +284,6 @@ form#my-form input[type="submit"]:hover {
     
 }
 
-
 .row {
     display: flex;
     flex-wrap: wrap;
@@ -352,22 +293,15 @@ form#my-form input[type="submit"]:hover {
 .cell {
     margin: 5px;
     border: 1px solid black;
-  }
-
-
-.grid-item{
-    text-align: center;
 }
+
+
 
 #bt{
     position: relative;
-    /* height: 50px;
-    width: 50px; */
-
 }
 
 .bt{
     height: 0px;
     margin:5px;
-
 }
