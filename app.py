@@ -30,17 +30,15 @@ app = Flask(__name__)
 # cred = credentials.Certificate('D:/AI-B[Sem 4]/EDI_Sem4/advanced-authentication-3ba33-firebase-adminsdk-basti-91ee0a3617.json')
 
 # Bhushan:
-
 # cred = credentials.Certificate('D:/2nd Year/Sem-2/advanced-authentication-3ba33-firebase-adminsdk-basti-91ee0a3617.json')
 
 # Rohan:
-cred = credentials.Certificate('D:/second_year/4th SEM/edi_mark_1/advanced-authentication-3ba33-firebase-adminsdk-basti-91ee0a3617.json')
-
-
+# cred = credentials.Certificate('D:/second_year/4th SEM/git_repo/mark5/Authentication_System/advanced-authentication-3ba33-firebase-adminsdk-basti-91ee0a3617.json')
 
 # Anish:
 
 # Manasi:
+cred = credentials.Certificate('E:/Sem4_EDI/advanced-authentication-3ba33-firebase-adminsdk-basti-91ee0a3617.json')
 
 firebase_admin.initialize_app(cred,{
     'storageBucket' : 'advanced-authentication-3ba33.appspot.com'
@@ -70,10 +68,10 @@ def upload():
         image_url = blob.generate_signed_url(expiration=300)
 
         # Render the image_upload.html template with success message
-        return render_template('image_upload.html', message=f'Successfully signed up! Image URL: {image_url}')
+        return render_template('image_upload.html', message=f'Successfully signed up! Image URL: {image_url}', show_button = True)
 
     # If request method is GET, render the image_upload.html template
-    return render_template('image_upload.html')
+    return render_template('image_upload.html',show_button = False)
 
 
 @app.route('/option' , methods=['GET', 'POST'])
@@ -109,8 +107,7 @@ def option():
 
                 # Append row to grid
                 cells.append(row)
-
-
+                                
         elif sel=="3X3":
             bucket = storage.bucket()
             blob = bucket.blob(f'{em.uid}.jpg')
@@ -256,7 +253,6 @@ def login_page():
         attempts_remaining = 3
 
         # retreiving hint
-
         db=firestore.client()
         doc_ref = db.collection('Passwords').document(user_.uid)
         hint = doc_ref.get().to_dict()["hint"]
@@ -266,7 +262,6 @@ def login_page():
         return render_template('login.html', images=some_images, attempts_remaining=attempts_remaining, hint=hint)
     
     return render_template('login.html')
-
 
 @app.route('/verify', methods=['POST'])
 def verify_page():
@@ -351,16 +346,13 @@ def add_password():
     if request.method=="POST":
         mail=request.form['mail']
         num=request.form['value']
-
         hint=request.form['hint']
-
         key=get_key()            # Get Fernet key
         f=Fernet(key)            # Fernet key
         num=num.encode('utf-8')  # Encode num into bytes
         num=f.encrypt(num)       # Encrypt
         id = auth.get_user_by_email(mail).uid
         db=firestore.client()
-
         doc_ref = db.collection('Passwords')
         res = doc_ref.document(id).set({'password':num, 'hint':hint})
         return "Password Added......{}".format(res)
@@ -373,7 +365,6 @@ def check():
         num=request.form['value']
         id = auth.get_user_by_email(mail).uid
         db=firestore.client()
-
         doc_ref = db.collection('Passwords').document(id)
         key = doc_ref.get().to_dict()["password"]
 
