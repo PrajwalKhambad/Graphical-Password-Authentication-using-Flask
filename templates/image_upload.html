@@ -14,15 +14,26 @@
     <div class="forms-container">
       <div class="signin-signup">
         <form action="#" method="post" enctype="multipart/form-data" class="sign-in-form">
-          <!-- <h2 class="title">Login</h2> -->
-          <h2>Authenticate with Graphical </h2>
-          <h2>Password</h2>
-          <br>
+          <h2 class="title">Login</h2>
+          <div class="input-field">
+            <i class="fas fa-envelope"></i>
+            <input type="email" id="email" placeholder="Email" />
+          </div>
+          <div class="input-field">
+            <i class="fas fa-lock"></i>
+            <input type="password" id="password" placeholder="Password" />
+          </div>
+          <input type="submit" value="Login" class="btn solid" />
 
-          <input type="button" onclick="location.href='login'" value="Login" class="btn solid" />
+          <this is commented line already!-- <p class="social-text">Or Sign in with social platforms</p> -->
+        <!-- </form> --> 
+          <h1 class="title">Login</h1>
+          <div >
+            <button onclick="redirectToLoginPage()" class="btn solid">Login</button>
+          </div>
+        
+        
 
-          <!-- <p class="social-text">Or Sign in with social platforms</p> -->
-        </form>
 
 
 
@@ -54,6 +65,12 @@
           </script>
           <!-- <input type="submit" class="btn" value="Sign up" /> -->
         </form>
+
+        {% if show_button %}
+        <div id="success-button">
+          <button class="btn" onclick="redirectToDisplayPage()">Set Graphical Password</button>
+        </div>
+        {% endif %}
       </div>
     </div>
 
@@ -86,6 +103,16 @@
   </div>
 
   <script src="static/javascript/app.js"></script>
+  <script>
+    function redirectToLoginPage() {
+      window.location.href = "/login";  // Redirect to the /another-page route in Flask
+    }
+  </script>
+  <script>
+    function redirectToDisplayPage() {
+      window.location.href = "/display";
+    }
+  </script>
 </body>
 
 </html>
