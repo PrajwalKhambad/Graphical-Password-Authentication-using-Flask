@@ -14,16 +14,12 @@
     <div class="forms-container">
       <div class="signin-signup">
         <form action="#" method="post" enctype="multipart/form-data" class="sign-in-form">
-          <h2 class="title">Login</h2>
-          <div class="input-field">
-            <i class="fas fa-envelope"></i>
-            <input type="email" id="email" placeholder="Email" />
-          </div>
-          <div class="input-field">
-            <i class="fas fa-lock"></i>
-            <input type="password" id="password" placeholder="Password" />
-          </div>
-          <input type="submit" value="Login" class="btn solid" />
+          <!-- <h2 class="title">Login</h2> -->
+          <h2>Authenticate with Graphical </h2>
+          <h2>Password</h2>
+          <br>
+
+          <input type="button" onclick="location.href='login'" value="Login" class="btn solid" />
 
           <!-- <p class="social-text">Or Sign in with social platforms</p> -->
         </form>
@@ -45,7 +41,17 @@
             <input type="file" id="image" name="image" accept="image/*" alt="Select Image" required>
           </div>
 
-          <button type="submit">Submit</button>
+          <button type="submit" onclick="showButton()"">Submit</button>
+
+          <div id="hiddenButton" class="show">
+            <button id="myButton" onclick="location.href='./display'" >Generate Graphical Password</button>
+          </div>
+          <script>
+            function showButton() {
+              var hiddenButton = document.getElementById("hiddenButton");
+              hiddenButton.style.display = "block";
+            }
+          </script>
           <!-- <input type="submit" class="btn" value="Sign up" /> -->
         </form>
       </div>
@@ -136,3 +142,22 @@
 </body>
 
 </html> -->
+
+<!-- <form action="#" method="post" enctype="multipart/form-data" class="sign-in-form"> -->
+  <!-- <h2 class="title">Login</h2> -->
+  <!-- <h2>Authenticate with Graphical </h2> -->
+  <!-- <h2>Password</h2> -->
+  <!-- <br> -->
+  <!-- <div class="input-field">
+    <i class="fas fa-envelope"></i>
+    <input type="email" id="email" placeholder="Email" />
+  </div>
+  <div class="input-field">
+    <i class="fas fa-lock"></i>
+    <input type="password" id="password" placeholder="Password" />
+  </div> -->
+  <!-- value="Login" -->
+  <!-- <input type="button" onclick="location.href='login'" value="Login" class="btn solid" /> -->
+
+  <!-- <p class="social-text">Or Sign in with social platforms</p> -->
+<!-- </form> -->

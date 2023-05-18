@@ -120,13 +120,15 @@ form.sign-in-form {
 
 button[type=submit] {
     margin-top: 20px;
-    width: 200px;
+    width: 250px;
     background-color: #5995fd;
     color: white;
-    padding: 17px 20px;
+    padding: 20px 20px;
     border-radius: 55px;
     border: none;
     cursor: pointer;
+    font-weight: 100;
+    font-size: medium;
     box-shadow: 0 0 5px rgba(0,0,0,0.1);
   }
 
@@ -149,6 +151,25 @@ button[type=submit] {
 .btn:hover {
   background-color: #4d84e2;
 }
+
+.show{
+  display: none;
+}
+
+#myButton{
+    margin-top: 20px;
+    width: 250px;
+    background-color: #5995fd;
+    color: white;
+    padding: 20px 20px;
+    border-radius: 55px;
+    border: none;
+    cursor: pointer;
+    font-weight: 100;
+    font-size:15px;
+    box-shadow: 0 0 5px rgba(0,0,0,0.1);
+}
+
 .panels-container {
   position: absolute;
   height: 100%;
@@ -268,6 +289,7 @@ button[type=submit] {
 .container.sign-up-mode .right-panel {
   pointer-events: all;
 }
+
 
 @media (max-width: 870px) {
   .container {
