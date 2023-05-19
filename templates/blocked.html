@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Blocked</title>
+</head>
+
+<body>
+  <h1>Your session is blocked.</h1>
+  <p>You cannot access the login page for the next 24 hours.</p>
+  <p>Blocked until: {{ blocked_until }}</p>
+  <p>Time remaining: {{ remaining_time }}</p>
+</body>
+
+</html>
+
+
+<!-- <!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Blocked</title>
+</head>
+
+<body>
+  <h1>Access Blocked</h1>
+  <p>You have exceeded the maximum number of login attempts.</p>
+  <p>Your access to the login page is blocked until {{ blocked_until.strftime('%Y-%m-%d %H:%M:%S') }}</p>
+</body>
+
+</html> -->
