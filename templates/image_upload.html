@@ -13,29 +13,12 @@
   <div class="container">
     <div class="forms-container">
       <div class="signin-signup">
-        <!-- <form action="/#" method="post" enctype="multipart/form-data" class="sign-in-form">
-          <h1 class="title">Login</h1>
-          <div class="input-field">
-            <i class="fas fa-envelope"></i>
-            <input type="email" id="email" placeholder="Email" />
-          </div>
-          <div class="input-field">
-            <i class="fas fa-lock"></i>
-            <input type="password" id="password" placeholder="Password" />
-          </div>
-          <input type="submit" value="Login" class="btn solid" />
-
-          <this is commented line already!-- <p class="social-text">Or Sign in with social platforms</p> -->
-        <!-- </form> --> 
-          <h1 class="title">Login</h1>
-          <div >
-            <button onclick="redirectToLoginPage()" class="btn solid">Login</button>
-          </div>
-        
-        
-
-
-
+        <form action="/#" method="post" enctype="multipart/form-data" class="sign-in-form">
+          <h2 class="title">Login with Graphical Password</h2>
+          <h1>Authentication</h1>
+          <input id="my-btn"type="button" value="login" onclick="location.href='/login'" class="btn solid" />
+        </form> 
+         
 
         <form action="/" method="post" enctype="multipart/form-data" class="sign-up-form">
           <h2 class="title">Sign up</h2>
@@ -52,15 +35,14 @@
             <input type="file" id="image" name="image" accept="image/*" alt="Select Image" required>
           </div>
 
-          <button type="submit">Submit</button>
-          <!-- <input type="submit" class="btn" value="Sign up" /> -->
+          <button type="submit">SUBMIT</button>
+          {% if show_button %}
+          <div id="success-button">
+            <button id="btn-1" class="btn" onclick="redirectToDisplayPage()">Set Graphical Password</button>
+          </div>
+          {% endif %}
         </form>
-
-        {% if show_button %}
-        <div id="success-button">
-          <button class="btn" onclick="redirectToDisplayPage()">Set Graphical Password</button>
-        </div>
-        {% endif %}
+        <!-- <button id="btn-1" class="btn" onclick="redirectToDisplayPage()">Set Graphical Password</button> -->
       </div>
     </div>
 
@@ -106,56 +88,3 @@
 </body>
 
 </html>
-
-
-
-
-
-<!-- /////////////////////// -->
-
-<!-- <!DOCTYPE html>
-<html>
-
-<head>
-  <meta charset="utf-8">
-  <title>Signup</title>
-</head>
-
-<body>
-  <h1>Signup</h1>
-  <form action="/" method="post" enctype="multipart/form-data">
-    <label for="email">Email</label>
-    <input type="email" id="email" name="email" required>
-    <br>
-    <label for="password">Password</label>
-    <input type="password" id="password" name="password" required>
-    <br>
-    <label for="image">Image</label>
-    <input type="file" id="image" name="image" accept="image/*" required>
-    <br>
-    <button type="submit">Submit</button>
-  </form>
-  <p>Already have an account? <a href="#">Login</a></p>
-  <br>
-  <div id="message"></div>
-  <form id="new_form" action="/display" method="POST_" style="display: none;">
-    <button type="submit">OP</button>
-  </form>
-
-  <script>
-    // Get the message context variable from the template
-    const message = "{{ message }}";
-
-    // If message is not empty, update the message element with the message
-    if (message !== "") {
-      const messageElement = document.getElementById("message");
-      messageElement.textContent = message;
-
-      const new_form_div = document.getElementById("new_form");
-      new_form_div.style.display = "block";
-    }
-
-  </script>
-</body>
-
-</html> -->

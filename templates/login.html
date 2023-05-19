@@ -48,22 +48,40 @@
         </div>
 
 
-        <form method="POST" action="/verify">
+        <form method="POST" action="/verify">         
           {% if images %}
 
-          {% for i in range(6) %}
-          <button id="b1" name="selected_image" value="{{ images[i] }}">
-              <img src="{{ images[i] }}" width="200" height="200">
-          </button>
-          {% endfor %}
-
-          <button type="button" onclick="showHint()">Hint</button>
+          <div class="arr">
+            <input type="button" id="my-button" value="Hint" placeholder="Hint"  onclick="showHint()">
           <p id="hint" style="display: none">{{ hint }}</p>
           <script>
             function showHint() {
               document.getElementById("hint").style.display = "block";
             }
           </script>
+            <!-- <button id="my-button" class="arr-1" onclick="showHint()">Hint</button>
+            <p id="hint" style="display: none;">{{ hint }}</p>
+            <script>
+              function showHint() {
+                document.getElementById("hint").style.display = "block";
+              }
+            </script> -->
+          </div>
+         
+
+          {% for i in range(6) %}
+          <button id="b1" name="selected_image" value="{{ images[i] }}">
+              <img src="{{ images[i] }}" width="180" height="150">
+          </button>
+          {% endfor %}
+
+          <!-- <button type="button" onclick="showHint()">Hint</button>
+          <p id="hint" style="display: none">{{ hint }}</p>
+          <script>
+            function showHint() {
+              document.getElementById("hint").style.display = "block";
+            }
+          </script> -->
 
 
           {% else %}

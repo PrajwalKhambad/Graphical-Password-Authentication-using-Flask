@@ -8,7 +8,7 @@
 </head>
 
 <body>
-  
+
   {% if email %}
   <div class="center">
 
@@ -18,8 +18,8 @@
       </div>
       <h3>{{ email }}</h3>
     </div>
- 
-  
+
+
     <div class="select">
       <form action="option" method="post">
       <input type="submit" value="2X2" name="grid">
@@ -38,30 +38,34 @@
     {% for j in i%}
     {% set b=loop.index%}
     <button class="bt" value="{{a}}{{b}}">
-      <img src="{{ j }}" width="100" height="auto">
+      <img src="{{ j }}" width="130" height="auto">
     </button>
     {%endfor%}
     <br>
     {%endfor%}
     </div>
-
-    
-  <form action="/pass" method="post">
-    <input type="password" id="value" name="value" onfocus="this.value=''" readonly style="height: 40px; width: 300px;" placeholder="Your graphical password will generate here">
     <br>
-    <input type="hidden" value="{{email}}" name="mail">
-    <input type="text" id="hint" name="hint" onfocus="this.hint=''" style="height: 40px; width: 300px;" placeholder="Add a Hint">
-    <br><br>
-    <input type="submit" value="Add Password and Hint">
-  </form>
-    
+
+    <div class="arr">
+      <form id="my-form" action="/pass" method="post">
+        <input type="password" id="value" name="value" onfocus="this.value=''"  placeholder="password" style="height: 45px; width: 250px; border-color:#C9EEFF; margin-bottom: -10px; background-color: #C9EEFF; border-radius: 40px; 
+       outline:none; outline: none; text-align: center;">
+        <br><br>
+        <input type="hidden" value="{{email}}" name="mail">
+        <input type="text" id="hint" name="hint" onfocus="this.hint=''" placeholder="Add a Hint">
+        <br><br>
+        <input type="submit" value="submit">
+        <!-- <input type="hidden" value="{{email}}" name="mail"> -->
+      </form>
+    </div>
+
     {% else %}
     <div class="image-show">
       <img src="{{ image_url }}" style="max-width: 700px; max-height: 350px;">
     </div>
     {%endif%}
-  </div> 
- 
+  </div>
+
   {% else %}
   <div class="abc">
     <h1>Welcome User!</h1>
@@ -76,7 +80,7 @@
       </div>
     </form>
   </div>
- 
+
   {% endif %}
 </body>
 <script src="static/javascript/value.js"></script>

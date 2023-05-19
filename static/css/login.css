@@ -110,7 +110,6 @@ hr{
 }
 
 input[type=email] {
-
   outline: none;
   background-color: #C9EEFF;
   border: none;
@@ -232,3 +231,30 @@ input[type=email] {
   background-color: #FFFBEB;
 }
 
+.arr{
+  display: block;
+}
+
+#my-button{
+  display: inline-block;
+  outline: none;
+  cursor: pointer;
+  width: 150px;
+  font-weight: 600;
+  border-radius: 40px;
+  padding: 12px 24px;
+  border: 0;
+  color: #000021;
+  background: #1de9b6;
+  /* line-height: 1.15; */
+  font-size: 16px;
+}
+
+#my-button:hover[type=button] {
+  transition: all .1s ease;
+  box-shadow: 0 0 0 0 #fff, 0 0 0 3px #1de9b6;
+}
+
+/* #hint{
+  display: none;
+} */
