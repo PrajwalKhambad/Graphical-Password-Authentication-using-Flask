@@ -1,4 +1,4 @@
-from datetime import timedelta, datetime
+from datetime import timedelta, datetime, timezone
 import io
 from flask import Flask, render_template, request
 import base64
@@ -11,6 +11,8 @@ from PIL import Image
 import numpy as np
 import random
 from cryptography.fernet import Fernet
+from pytz import timezone
+import random
 
 #Initializing encryption key
 # key = Fernet.generate_key()
@@ -52,6 +54,7 @@ def home():
 
 @app.route("/", methods=["GET", "POST"])
 def upload():
+    print(request.method)
     if request.method == "POST":
         # Get form data
         email = request.form['email']
@@ -217,7 +220,7 @@ def login_page():
     if request.method == 'POST':
         global email_
         email_ = request.form['email']
-
+        
         # retrieve images from firestore storage
         bucket = storage.bucket()
         blobs = bucket.list_blobs()
@@ -263,20 +266,40 @@ def login_page():
         hint = doc_ref.get().to_dict()["hint"]
         if(not (hint and not hint.isspace())):
             hint = "No hint added during setting graphical password!"
-
+       
         return render_template('login.html', images=some_images, attempts_remaining=attempts_remaining, hint=hint)
 
     return render_template('login.html')
+
+from flask import session
+# --------Final code---------------
+
+# Dictionary to store blocked email addresses and their blocked_until time
+blocked_emails = {}
+
+# Define the specific image URL
+specific_image_url = "https://example.com/specific_image.jpg"
+
 
 @app.route('/verify', methods=['POST'])
 def verify_page():
     specific_image = specific_image_url
     selected_image = request.form['selected_image']
     attempts_remaining = int(request.form['attempts_remaining'])
+    # email = request.form['email']
+    email = request.form.get('email')
+
+    # Check if email is blocked
+    if email in blocked_emails and blocked_emails[email] > datetime.now():
+        blocked_until = blocked_emails[email]
+        remaining_time = blocked_until - datetime.now()
+        return render_template('blocked.html', blocked_until=blocked_until, remaining_time=remaining_time)
+        # return render_template('blocked.html', blocked_until=blocked_emails[email])
+
     if specific_image == selected_image:
         # TODO: return the file after a successful image selection
         # return "Verification successful!"
-        return render_template('authentication.html', email=email_)
+        return render_template('authentication.html', email=email)
     else:
         attempts_remaining -= 1
         if attempts_remaining > 0:
@@ -284,8 +307,8 @@ def verify_page():
             return render_template('login.html', error_message=error_message, images=some_images, attempts_remaining=attempts_remaining)
         else:
             return "Verification failed! Maximum number of attempts reached."
-
-
+            
+        
 @app.route('/authenticate' , methods=['GET', 'POST'])
 def authenticate():
     if request.method=="POST":
@@ -365,6 +388,7 @@ def add_password():
         return render_template('loggedpage.html', info=info)
     return "Password not Added...."
 
+# --------------Original /check route------------------------
 @app.route('/check' , methods=['GET', 'POST'])
 def check():
     if request.method=="POST":
