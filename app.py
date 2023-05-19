@@ -33,12 +33,12 @@ app = Flask(__name__)
 # cred = credentials.Certificate('D:/2nd Year/Sem-2/advanced-authentication-3ba33-firebase-adminsdk-basti-91ee0a3617.json')
 
 # Rohan:
-# cred = credentials.Certificate('D:/second_year/4th SEM/git_repo/mark5/Authentication_System/advanced-authentication-3ba33-firebase-adminsdk-basti-91ee0a3617.json')
+cred = credentials.Certificate('D:/second_year/4th SEM/git_repo/mark5/Authentication_System/advanced-authentication-3ba33-firebase-adminsdk-basti-91ee0a3617.json')
 
 # Anish:
 
 # Manasi:
-cred = credentials.Certificate('E:/Sem4_EDI/advanced-authentication-3ba33-firebase-adminsdk-basti-91ee0a3617.json')
+# cred = credentials.Certificate('E:/Sem4_EDI/advanced-authentication-3ba33-firebase-adminsdk-basti-91ee0a3617.json')
 
 firebase_admin.initialize_app(cred,{
     'storageBucket' : 'advanced-authentication-3ba33.appspot.com'
@@ -107,7 +107,7 @@ def option():
 
                 # Append row to grid
                 cells.append(row)
-                                
+
         elif sel=="3X3":
             bucket = storage.bucket()
             blob = bucket.blob(f'{em.uid}.jpg')
@@ -160,6 +160,7 @@ def image():
 
         # grid=request.form["grid"]
 
+
         # if len(cells)!=0:
         #     imgs=cells
 
@@ -169,6 +170,10 @@ def image():
     # If request method is GET, show form to input email
     return render_template('display.html')
 
+
+@app.route('/loggedpage',methods=['GET', 'POST'])
+def pppp():
+    return render_template('loggedpage.html')
 
 @app.route('/half')
 def my_fun():
@@ -187,7 +192,7 @@ def my_fun():
 
     topLeft = image[0:cY, 0:cX]
     topRight = image[0:cY, cX:w]
-    bottomLeft = image[cY:h, 0:cX]                                                                                                  
+    bottomLeft = image[cY:h, 0:cX]
     bottomRight = image[cY:h, cX:w]
 
     _ , data1=cv2.imencode(".jpg",topLeft)
@@ -229,7 +234,7 @@ def login_page():
             user_ = auth.get_user_by_email(email_)
         except:
             return "User not found", 404
-        
+
         if user_:
             blob_2 = bucket.blob(f'{user_.uid}.jpg')
             global specific_image_url
@@ -260,7 +265,7 @@ def login_page():
             hint = "No hint added during setting graphical password!"
 
         return render_template('login.html', images=some_images, attempts_remaining=attempts_remaining, hint=hint)
-    
+
     return render_template('login.html')
 
 @app.route('/verify', methods=['POST'])
@@ -279,8 +284,8 @@ def verify_page():
             return render_template('login.html', error_message=error_message, images=some_images, attempts_remaining=attempts_remaining)
         else:
             return "Verification failed! Maximum number of attempts reached."
-            
-        
+
+
 @app.route('/authenticate' , methods=['GET', 'POST'])
 def authenticate():
     if request.method=="POST":
@@ -355,7 +360,9 @@ def add_password():
         db=firestore.client()
         doc_ref = db.collection('Passwords')
         res = doc_ref.document(id).set({'password':num, 'hint':hint})
-        return "Password Added......{}".format(res)
+        # return "Password Added......{}".format(res)
+        info = "Password added ...... {}".format(res)
+        return render_template('loggedpage.html', info=info)
     return "Password not Added...."
 
 @app.route('/check' , methods=['GET', 'POST'])
@@ -374,7 +381,7 @@ def check():
 
 
         if(num==key):
-            return "Valid Password........."
+            return pppp()
     return "Invalid Password......"
 
 if __name__ == '__main__':
